@@ -1,0 +1,117 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease),
+    color 0.3s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+
+/* Over the hero sky: transparent, light text. */
+.header[data-lifted="false"] {
+  color: #fff;
+}
+
+.header[data-lifted="true"] {
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(12px) saturate(1.4);
+  border-bottom-color: var(--rule);
+  color: var(--ink);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-5);
+  width: 100%;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--display);
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  color: inherit;
+}
+
+/* Same idea as the favicon: a boundary, drawn but not solid. */
+.mark {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  border: 1.5px solid currentColor;
+  border-radius: 3px;
+  position: relative;
+  opacity: 0.8;
+}
+
+.mark::after {
+  content: "";
+  position: absolute;
+  left: 1.5px;
+  right: 1.5px;
+  top: 50%;
+  border-top: 1.5px dashed var(--accent);
+  transform: translateY(-50%);
+}
+
+.header[data-lifted="false"] .mark::after {
+  border-top-color: var(--sky-horizon);
+}
+
+.wordmark:hover {
+  color: inherit;
+  opacity: 0.75;
+}
+
+.nav {
+  display: flex;
+  gap: clamp(var(--s-4), 2.5vw, var(--s-6));
+  align-items: center;
+}
+
+.link {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.62;
+  white-space: nowrap;
+  padding-block: 2px;
+  border-bottom: 1px solid transparent;
+  transition: opacity 0.2s var(--ease);
+}
+
+.link:hover {
+  color: inherit;
+  opacity: 1;
+}
+
+.link[aria-current="page"] {
+  opacity: 1;
+  border-bottom-color: var(--accent);
+}
+
+.header[data-lifted="false"] .link[aria-current="page"] {
+  border-bottom-color: var(--sky-horizon);
+}
+
+@media (max-width: 34rem) {
+  .nav {
+    gap: var(--s-4);
+  }
+  .link {
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+  }
+}

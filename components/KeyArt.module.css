@@ -1,0 +1,113 @@
+.wrap {
+  position: relative;
+  aspect-ratio: 200 / 130;
+  border-radius: 4px;
+  border: 1px solid var(--rule);
+  background: var(--paper-raised);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  transition: border-color 0.25s var(--ease), transform 0.35s var(--ease);
+}
+
+/* Faint blueprint grid behind the art */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size: 16px 16px;
+  opacity: 0.4;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 78%);
+}
+
+.svg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 8%;
+}
+
+/* --- Shared marks ------------------------------------------- */
+
+.trackBg {
+  fill: var(--rule);
+}
+
+.agentBar {
+  fill: var(--accent);
+}
+
+.dashedBar {
+  fill: none;
+  stroke: var(--ink-quiet);
+  stroke-width: 1.2;
+  stroke-dasharray: 4 3;
+}
+
+.dot {
+  fill: var(--ink-quiet);
+}
+
+.dotAccent {
+  fill: var(--accent);
+}
+
+.hair {
+  stroke: var(--rule);
+  stroke-width: 1;
+  fill: none;
+}
+
+.spine {
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  fill: none;
+}
+
+.divider {
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+  fill: none;
+}
+
+/* --- Reframe ------------------------------------------------ */
+
+.panelMuted {
+  fill: var(--paper-sunken);
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.panelAccent {
+  fill: var(--accent-wash);
+  stroke: var(--accent-rule);
+  stroke-width: 1;
+}
+
+.panelAccentSoft {
+  fill: var(--accent-wash);
+  opacity: 0.55;
+}
+
+.lineMuted {
+  stroke: var(--ink-quiet);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.lineAccent {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.75;
+}
+
+.arrow {
+  stroke: var(--ink-tertiary);
+  stroke-width: 1.4;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

@@ -1,0 +1,104 @@
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hillFar {
+  fill: var(--land-far);
+  opacity: 0.55;
+}
+
+.treeMid {
+  fill: var(--land-mid);
+  opacity: 0.8;
+}
+
+.treeNear {
+  fill: var(--land-near);
+}
+
+.meadowFar {
+  fill: var(--land-near);
+  opacity: 0.85;
+}
+
+.meadow {
+  fill: var(--land-meadow);
+}
+
+.flora {
+  opacity: 0.9;
+}
+
+.stem {
+  stroke: color-mix(in srgb, var(--land-far) 55%, white 45%);
+  stroke-width: 1.3;
+  fill: none;
+  opacity: 0.45;
+}
+
+.seed {
+  stroke: rgba(255, 255, 255, 0.42);
+  stroke-width: 0.8;
+}
+
+.seedTip {
+  fill: rgba(255, 255, 255, 0.75);
+}
+
+.bud {
+  fill: color-mix(in srgb, var(--sky-horizon) 60%, white 40%);
+  opacity: 0.4;
+}
+
+/* Pivot at the base of the stem so the head travels and the root
+   doesn't. Amplitude matters more than it looks: at +/-1.2deg on a
+   ~75px stem the head moved about 1px, which is invisible. */
+.dandelion,
+.spike {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation-name: sway;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+/* Dandelions are taller and lighter, so they catch more wind. */
+.dandelion {
+  animation-name: swayTall;
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-3.2deg);
+  }
+  50% {
+    transform: rotate(3.2deg);
+  }
+}
+
+@keyframes swayTall {
+  0%,
+  100% {
+    transform: rotate(-5.5deg);
+  }
+  35% {
+    transform: rotate(2.4deg);
+  }
+  50% {
+    transform: rotate(5.5deg);
+  }
+  75% {
+    transform: rotate(-1.8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dandelion,
+  .spike {
+    animation: none;
+  }
+}

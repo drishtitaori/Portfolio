@@ -1,0 +1,30 @@
+.figure {
+  margin: 0;
+  display: grid;
+  gap: var(--s-3);
+}
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+  border: 1px solid var(--rule);
+  background: var(--paper-sunken);
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* The subject sits right of centre and low in the frame; bias the crop
+     so she survives a square or landscape ratio. */
+  object-position: 62% 42%;
+  display: block;
+}
+
+.caption {
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-tertiary);
+  max-width: 42ch;
+}

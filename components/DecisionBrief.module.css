@@ -1,0 +1,78 @@
+.wrap {
+  max-width: var(--measure-wide);
+  margin-block-start: var(--s-7);
+  padding: clamp(var(--s-5), 3vw, var(--s-6));
+  border: 1px solid var(--rule);
+  border-inline-start: 2px solid var(--accent);
+  border-radius: 3px;
+  background: var(--paper-raised);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-4);
+  padding-block-end: var(--s-4);
+  margin-block-end: var(--s-4);
+  border-bottom: 1px solid var(--rule);
+}
+
+.headNote {
+  font-size: 0.8125rem;
+  color: var(--ink-tertiary);
+}
+
+.rows {
+  display: grid;
+  gap: var(--s-4);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: var(--s-4);
+  align-items: start;
+}
+
+.value,
+.valueHonest {
+  font-size: var(--t-small);
+  line-height: 1.6;
+  color: var(--ink-secondary);
+}
+
+/* The honesty row is the credibility signal, so it gets marked rather than
+   blending into the other three. */
+.valueHonest {
+  color: var(--caution);
+}
+
+.live {
+  display: grid;
+  gap: var(--s-2);
+  margin-block-start: var(--s-5);
+  padding-block-start: var(--s-4);
+  border-top: 1px solid var(--rule);
+}
+
+.liveLink {
+  font-size: var(--t-small);
+  font-weight: 500;
+}
+
+.liveText {
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--ink-secondary);
+  display: grid;
+  gap: var(--s-2);
+  justify-items: start;
+}
+
+@media (max-width: 46rem) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: var(--s-1);
+  }
+}

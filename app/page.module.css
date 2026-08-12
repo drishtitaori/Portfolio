@@ -1,0 +1,431 @@
+/* ============================================================
+   Client band — a visual rhythm break straight after the hero
+   ============================================================ */
+
+.clientBand {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-sunken);
+}
+
+.clientInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4) clamp(var(--s-5), 4vw, var(--s-8));
+  padding-block: var(--s-5);
+}
+
+.clients {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4) clamp(var(--s-5), 4vw, var(--s-8));
+  flex: 1;
+}
+
+.clients li {
+  font-family: var(--display);
+  font-weight: var(--display-weight);
+  font-size: clamp(1rem, 0.92rem + 0.42vw, 1.25rem);
+  letter-spacing: -0.022em;
+  color: var(--ink-secondary);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Positioning statement
+   ============================================================ */
+
+.pitch {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+  gap: var(--s-6) clamp(var(--s-6), 5vw, var(--s-8));
+  padding-block: clamp(var(--s-8), 8vw, var(--s-10));
+  align-items: start;
+}
+
+/* Statement and supporting copy share the left column so the photo can sit
+   beside the whole block rather than beside one paragraph of it. */
+.pitchText {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--s-6) clamp(var(--s-6), 4vw, var(--s-7));
+  align-items: start;
+}
+
+.pitchPhoto {
+  max-width: 22rem;
+}
+
+.pitchLead {
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 1.15rem + 2.4vw, 3rem);
+  line-height: 1.12;
+  letter-spacing: -0.026em;
+  text-wrap: balance;
+}
+
+.pitchBody {
+  display: grid;
+  gap: var(--s-4);
+  padding-block-start: 0.6rem;
+}
+
+.pitchBody p {
+  font-size: var(--t-body);
+  line-height: 1.62;
+  color: var(--ink-secondary);
+}
+
+@media (max-width: 74rem) {
+  .pitchText {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 56rem) {
+  .pitch {
+    grid-template-columns: 1fr;
+  }
+  .pitchPhoto {
+    max-width: 20rem;
+  }
+}
+
+/* ============================================================
+   Impact numbers
+   ============================================================ */
+
+.impact {
+  border-block: 1px solid var(--rule);
+  background: var(--paper-sunken);
+  padding-block: clamp(var(--s-6), 5vw, var(--s-8)) var(--s-5);
+}
+
+.impactInner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--s-6) var(--s-5);
+}
+
+.impactItem {
+  display: grid;
+  gap: var(--s-1);
+  align-content: start;
+  padding-inline-start: var(--s-4);
+  border-inline-start: 2px solid var(--accent-rule);
+}
+
+.impactValue {
+  font-family: var(--display);
+  font-weight: var(--display-weight-bold);
+  font-size: clamp(2.2rem, 1.5rem + 2.4vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+
+.impactLabel {
+  font-size: var(--t-small);
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.impactNote {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-block-start: var(--s-1);
+}
+
+.impactCaveat {
+  margin-block-start: var(--s-6);
+  padding-block-start: var(--s-4);
+  border-top: 1px solid var(--rule);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ink-tertiary);
+  max-width: 52ch;
+}
+
+/* ============================================================
+   Work grid
+   ============================================================ */
+
+.workHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--s-4) var(--s-6);
+  padding-block: clamp(var(--s-8), 7vw, var(--s-9)) var(--s-6);
+}
+
+.workTitle {
+  font-size: clamp(1.9rem, 1.4rem + 2vw, 2.75rem);
+  letter-spacing: -0.026em;
+}
+
+.workNote {
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-tertiary);
+  max-width: 34ch;
+}
+
+.grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(var(--s-5), 3vw, var(--s-7));
+}
+
+/* The hero study gets the full width — the hierarchy should be obvious
+   at a glance rather than requiring you to read the labels. */
+.gridItem:first-child {
+  grid-column: 1 / -1;
+}
+
+.card {
+  display: grid;
+  gap: var(--s-3);
+  text-decoration: none;
+  height: 100%;
+  align-content: start;
+}
+
+.card:hover {
+  color: inherit;
+}
+
+.card:hover :global(.KeyArt),
+.card:hover > div:first-child {
+  border-color: var(--accent-rule);
+  transform: translateY(-3px);
+}
+
+.gridItem:first-child .card {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto auto;
+  column-gap: clamp(var(--s-5), 4vw, var(--s-8));
+  align-content: center;
+}
+
+.gridItem:first-child .card > *:first-child {
+  grid-row: 1 / -1;
+  grid-column: 1;
+  align-self: center;
+}
+
+.gridItem:first-child .card > *:not(:first-child) {
+  grid-column: 2;
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  align-items: baseline;
+  margin-block-start: var(--s-2);
+}
+
+.cardTitle {
+  font-size: clamp(1.3rem, 1.15rem + 0.7vw, 1.7rem);
+  line-height: 1.14;
+  letter-spacing: -0.022em;
+}
+
+.gridItem:first-child .cardTitle {
+  font-size: clamp(1.7rem, 1.25rem + 2.1vw, 2.9rem);
+  letter-spacing: -0.03em;
+}
+
+.card:hover .cardTitle {
+  color: var(--accent);
+}
+
+.cardDeck {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: var(--t-body);
+  line-height: 1.5;
+  letter-spacing: -0.008em;
+  color: var(--ink-secondary);
+  max-width: 42ch;
+}
+
+.gridItem:first-child .cardDeck {
+  font-size: var(--t-lead);
+}
+
+/* Stacked rather than inline: an inline label next to a big number
+   collapses into a 4-word-tall column at these widths. */
+.cardStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4) clamp(var(--s-5), 3vw, var(--s-7));
+  margin-block-start: var(--s-2);
+  padding-block-start: var(--s-4);
+  border-top: 1px solid var(--rule);
+}
+
+.stat {
+  display: grid;
+  gap: 2px;
+  align-content: start;
+  min-width: 7rem;
+  max-width: 13rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--ink-tertiary);
+}
+
+.stat b {
+  font-family: var(--display);
+  font-weight: var(--display-weight-bold);
+  font-size: 1.5rem;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.gridItem:first-child .stat b {
+  font-size: 2rem;
+}
+
+.gridItem:first-child .stat {
+  max-width: 15rem;
+}
+
+.cardCta {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-block-start: var(--s-2);
+}
+
+@media (max-width: 56rem) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .gridItem:first-child .card {
+    grid-template-columns: 1fr;
+  }
+  .gridItem:first-child .card > *:first-child,
+  .gridItem:first-child .card > *:not(:first-child) {
+    grid-row: auto;
+    grid-column: 1;
+  }
+}
+
+/* ============================================================
+   Currently
+   ============================================================ */
+
+.currently {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  gap: var(--s-6);
+  padding-block: clamp(var(--s-8), 7vw, var(--s-9));
+  margin-block-start: var(--s-8);
+  border-top: 1px solid var(--rule);
+}
+
+.currentlyBody {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--s-6);
+}
+
+.currentlyItem {
+  display: grid;
+  gap: var(--s-2);
+  align-content: start;
+}
+
+.currentlyItem p {
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--ink-secondary);
+}
+
+@media (max-width: 60rem) {
+  .currently {
+    grid-template-columns: 1fr;
+    gap: var(--s-4);
+  }
+}
+
+/* ============================================================
+   Closing CTA
+   ============================================================ */
+
+.closer {
+  padding-block: clamp(var(--s-8), 7vw, var(--s-9));
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: var(--s-6);
+}
+
+.closerTitle {
+  font-size: clamp(1.75rem, 1.2rem + 2.6vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.028em;
+  max-width: 30ch;
+}
+
+.closerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+.closerPrimary,
+.closerSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.2s var(--ease), background 0.2s var(--ease),
+    color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.closerPrimary {
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+}
+
+.closerPrimary:hover {
+  color: var(--paper);
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.closerSecondary {
+  border: 1px solid var(--rule-strong);
+  color: var(--ink);
+}
+
+.closerSecondary:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}

@@ -1,0 +1,349 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  /* Pull up under the transparent nav */
+  margin-block-start: calc(-1 * var(--nav-h, 3.75rem));
+  padding-block: calc(var(--nav-h, 3.75rem) + var(--s-8)) 0;
+}
+
+/* ============================================================
+   Sky
+   ============================================================ */
+
+.sky {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(
+    to bottom,
+    var(--sky-top) 0%,
+    var(--sky-mid) 46%,
+    var(--sky-low) 74%,
+    var(--sky-horizon) 100%
+  );
+}
+
+/* Low sun behind the treeline */
+.glow {
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  width: min(58rem, 90vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--sky-horizon) 92%, white) 0%,
+    color-mix(in srgb, var(--sky-horizon) 40%, transparent) 42%,
+    transparent 68%
+  );
+  opacity: 0.7;
+}
+
+.cloudA,
+.cloudB {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  background: rgba(255, 255, 255, 0.16);
+  animation: drift 60s linear infinite;
+}
+
+.cloudA {
+  left: 6%;
+  top: 18%;
+  width: 34%;
+  height: 16%;
+}
+
+.cloudB {
+  right: 4%;
+  top: 34%;
+  width: 26%;
+  height: 12%;
+  animation-duration: 84s;
+  animation-direction: reverse;
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(-4%);
+  }
+  to {
+    transform: translateX(4%);
+  }
+}
+
+/* Ambient motes / stars */
+.mote {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--star);
+  opacity: 0;
+  animation-name: twinkle;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translateY(-4px);
+  }
+}
+
+/* ============================================================
+   Floating posture chips — the autonomy ladder as decoration
+   ============================================================ */
+
+.posture {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.7rem 0.3rem 0.55rem;
+  border-radius: 100px;
+  border: 1px solid var(--sky-chip);
+  background: var(--sky-chip-bg);
+  backdrop-filter: blur(6px);
+  color: var(--sky-ink-soft);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  animation-name: bob;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.postureDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.8;
+  flex: none;
+}
+
+.postureRung {
+  font-style: normal;
+  opacity: 0.5;
+  font-size: 0.625rem;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+
+  }
+  33% {
+    transform: translate3d(10px, -14px, 0);
+  }
+  66% {
+    transform: translate3d(-8px, 8px, 0);
+  }
+}
+
+@media (max-width: 68rem) {
+  .posture {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Landscape
+   ============================================================ */
+
+.landscape {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: min(42vh, 22rem);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ============================================================
+   Copy
+   ============================================================ */
+
+.inner {
+  position: relative;
+  padding-block-end: min(38vh, 20rem);
+  max-width: var(--frame);
+}
+
+.greeting {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--sky-ink-soft);
+  font-size: var(--t-small);
+  letter-spacing: 0.01em;
+  margin-block-end: var(--s-4);
+}
+
+.wave {
+  color: var(--sky-horizon);
+  font-size: 0.75rem;
+}
+
+/* The one place the site uses a bold sans as display type: a poster
+   statement. Long-form pages stay in the serif. */
+.title {
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: clamp(2.35rem, 1.1rem + 6.2vw, 5.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.042em;
+  color: var(--sky-ink);
+  max-width: 20ch;
+  text-wrap: initial;
+}
+
+/* Controlled break: two lines on wide screens, natural wrapping on
+   narrow ones where a forced break leaves an orphan. */
+.line {
+  display: block;
+}
+
+@media (max-width: 46rem) {
+  .line {
+    display: inline;
+  }
+  .title {
+    text-wrap: balance;
+  }
+}
+
+.lead {
+  margin-block-start: var(--s-5);
+  max-width: 46ch;
+  font-size: clamp(1rem, 0.94rem + 0.35vw, 1.1875rem);
+  line-height: 1.55;
+  color: var(--sky-ink-soft);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-block-start: var(--s-6);
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.15rem;
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease),
+    border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.primary {
+  background: #fff;
+  color: #17150f;
+  border: 1px solid #fff;
+}
+
+.primary:hover {
+  color: #17150f;
+  transform: translateY(-2px);
+  background: var(--sky-horizon);
+  border-color: var(--sky-horizon);
+}
+
+.secondary {
+  color: var(--sky-ink);
+  border: 1px solid var(--sky-chip);
+  background: var(--sky-chip-bg);
+  backdrop-filter: blur(6px);
+}
+
+.secondary:hover {
+  color: var(--sky-ink);
+  transform: translateY(-2px);
+  border-color: var(--sky-ink);
+}
+
+/* ============================================================
+   Scroll cue
+   ============================================================ */
+
+.scrollCue {
+  position: absolute;
+  left: 50%;
+  bottom: var(--s-5);
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: var(--s-2);
+  color: var(--sky-ink-soft);
+}
+
+.scrollCue :global(.label) {
+  color: inherit;
+  font-size: 0.625rem;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 2.5rem;
+  background: linear-gradient(to bottom, var(--sky-ink-soft), transparent);
+  animation: cue 2.4s ease-in-out infinite;
+  transform-origin: top;
+}
+
+@keyframes cue {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 46rem) {
+  .scrollCue {
+    display: none;
+  }
+  .inner {
+    padding-block-end: min(30vh, 14rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mote,
+  .posture,
+  .cloudA,
+  .cloudB,
+  .scrollLine {
+    animation: none;
+  }
+  .mote {
+    opacity: 0.6;
+  }
+}

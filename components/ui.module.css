@@ -1,0 +1,393 @@
+/* ============================================================
+   Section with mono side-label
+   ============================================================ */
+
+/* The body column fills the frame so diagrams can use the full width.
+   Prose is constrained to the reading measure individually rather than
+   by the grid — that's what lets a figure break out cleanly. */
+.section {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: var(--s-6);
+  padding-block-start: var(--s-8);
+}
+
+.sectionAside {
+  padding-block-start: 0.55rem;
+  align-self: start;
+}
+
+.sectionBody > * + * {
+  margin-block-start: var(--s-5);
+}
+
+/* Everything that is text stays inside the reading measure. */
+.sectionBody > p,
+.sectionBody > h2,
+.sectionBody > h3,
+.sectionBody > h4,
+.sectionBody > ul,
+.sectionBody > ol {
+  max-width: var(--measure);
+}
+
+.sectionTitle {
+  font-size: var(--t-h2);
+  margin-block-end: var(--s-2);
+  max-width: 26ch;
+}
+
+@media (max-width: 60rem) {
+  .section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-3);
+  }
+  .sectionAside {
+    padding-block-start: 0;
+  }
+}
+
+/* ============================================================
+   Wide breakout for diagrams
+   ============================================================ */
+
+/* Reclaims the label gutter as well, so a diagram spans the whole frame. */
+.wide {
+  margin-block: var(--s-7);
+  margin-inline-start: calc(-7rem - var(--s-6));
+  width: calc(100% + 7rem + var(--s-6));
+}
+
+@media (max-width: 60rem) {
+  .wide {
+    margin-inline-start: 0;
+    width: 100%;
+  }
+}
+
+.wideLabel {
+  display: block;
+  margin-block-end: var(--s-3);
+}
+
+.wideBody {
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: clamp(var(--s-4), 3vw, var(--s-7));
+  overflow-x: auto;
+}
+
+.caption {
+  margin-block-start: var(--s-3);
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-tertiary);
+  max-width: var(--measure);
+}
+
+/* ============================================================
+   Figure / image slot
+   ============================================================ */
+
+.figure {
+  margin-block: var(--s-6);
+  max-width: var(--measure-wide);
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  text-align: center;
+  padding: var(--s-6);
+  border: 1px dashed var(--rule-strong);
+  border-radius: 3px;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 9px,
+    color-mix(in srgb, var(--rule) 45%, transparent) 9px,
+    color-mix(in srgb, var(--rule) 45%, transparent) 10px
+  );
+}
+
+.slotShot {
+  max-width: 34ch;
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-secondary);
+  background: var(--paper);
+  padding: var(--s-2) var(--s-3);
+  border-radius: 2px;
+}
+
+/* ============================================================
+   Metrics
+   ============================================================ */
+
+.metrics {
+  max-width: var(--measure-wide);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--s-5) var(--s-6);
+  border-block: 1px solid var(--rule);
+  padding-block: var(--s-5);
+}
+
+.metricsCompact {
+  border: 0;
+  padding-block: 0;
+  gap: var(--s-4);
+}
+
+.metric {
+  display: grid;
+  gap: var(--s-1);
+  align-content: start;
+}
+
+.metricValue {
+  font-family: var(--display);
+  font-weight: var(--display-weight-bold);
+  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.25rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.metricLabel {
+  display: grid;
+  gap: var(--s-2);
+  font-size: var(--t-small);
+  line-height: 1.4;
+  color: var(--ink-secondary);
+}
+
+.metricCaveat {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--ink-tertiary);
+  padding-inline-start: var(--s-3);
+  border-inline-start: 1px solid var(--rule-strong);
+}
+
+/* ============================================================
+   Callouts
+   ============================================================ */
+
+.callout {
+  max-width: var(--measure);
+  padding: var(--s-5);
+  border-radius: 3px;
+  border: 1px solid var(--rule);
+  background: var(--paper-raised);
+  display: grid;
+  gap: var(--s-2);
+}
+
+.callout_decision {
+  border-inline-start: 2px solid var(--accent);
+  background: var(--accent-wash);
+  border-color: var(--accent-rule);
+}
+
+.callout_honest {
+  border-inline-start: 2px solid var(--caution);
+  background: var(--caution-wash);
+  border-color: color-mix(in srgb, var(--caution) 30%, transparent);
+}
+
+.calloutTitle {
+  font-size: 1.125rem;
+  line-height: 1.3;
+}
+
+.calloutBody {
+  font-size: var(--t-small);
+  line-height: 1.6;
+}
+
+.calloutBody > * + * {
+  margin-block-start: var(--s-3);
+}
+
+/* ============================================================
+   Pull quote
+   ============================================================ */
+
+.pull {
+  max-width: var(--measure);
+  margin-block: var(--s-7);
+  padding-inline-start: var(--s-5);
+  border-inline-start: 2px solid var(--accent);
+}
+
+.pull p {
+  font-family: var(--display);
+  font-size: var(--t-h3);
+  font-weight: var(--display-weight);
+  line-height: 1.4;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+.pullCite {
+  display: block;
+  margin-block-start: var(--s-3);
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: var(--ink-tertiary);
+}
+
+/* ============================================================
+   Ledger table
+   ============================================================ */
+
+.ledgerWrap {
+  max-width: var(--measure-wide);
+  margin-block: var(--s-6);
+  overflow-x: auto;
+}
+
+.ledger {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-small);
+  text-align: start;
+}
+
+.ledger th {
+  text-align: start;
+  padding: 0 var(--s-4) var(--s-3) 0;
+  border-bottom: 1px solid var(--rule-strong);
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+.ledger td {
+  padding: var(--s-4) var(--s-4) var(--s-4) 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  line-height: 1.55;
+  min-width: 11rem;
+}
+
+.ledger tr:last-child td {
+  border-bottom: 0;
+}
+
+.ledger td:first-child {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* ============================================================
+   Facts
+   ============================================================ */
+
+.facts {
+  max-width: var(--measure-wide);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--s-4) var(--s-5);
+}
+
+.facts div {
+  display: grid;
+  gap: var(--s-1);
+  align-content: start;
+}
+
+.facts dd {
+  font-size: var(--t-small);
+  line-height: 1.45;
+  color: var(--ink-secondary);
+}
+
+/* ============================================================
+   Tags
+   ============================================================ */
+
+.tags {
+  max-width: var(--measure-wide);
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.tags li {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  border: 1px solid var(--rule);
+  border-radius: 100px;
+  padding: 0.25rem 0.6rem;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Prev / next
+   ============================================================ */
+
+.nextPrev {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+  margin-block-start: var(--s-9);
+  padding-block-start: var(--s-6);
+  border-top: 1px solid var(--rule);
+}
+
+.nextPrevRight {
+  text-align: end;
+}
+
+.nextPrevLink {
+  display: grid;
+  gap: var(--s-2);
+  text-decoration: none;
+}
+
+.nextPrevTitle {
+  font-family: var(--display);
+  font-size: var(--t-h3);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.nextPrevLink:hover .nextPrevTitle {
+  color: var(--accent);
+}
+
+/* ============================================================
+   Inside a Wide breakout, children shouldn't re-apply the
+   reading-measure cap or their own vertical margins — the
+   figure already owns that spacing.
+   ============================================================ */
+
+.wideBody .ledgerWrap,
+.wideBody .figure,
+.wideBody .facts,
+.wideBody .metrics,
+.wideBody .callout,
+.wideBody .pull {
+  max-width: none;
+  margin-block: 0;
+}
