@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://drishtitaori.com
+Sitemap: https://drishtitaori.com/sitemap.xml
