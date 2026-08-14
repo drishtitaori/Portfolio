@@ -23,7 +23,7 @@ export default function WorkGrid() {
     <ul className="tiles">
       {studies.map((study) => (
         <li key={study.slug} style={{ "--tile": `var(${study.tint})` } as React.CSSProperties}>
-          <Link href={`/v2/work/${study.slug}/`} className="tile">
+          <Link href={`/work/${study.slug}/`} className="tile">
             <span className="mono tileCat">{study.category}</span>
 
             <h3 className="tileTitle">

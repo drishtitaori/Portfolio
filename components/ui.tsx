@@ -246,7 +246,7 @@ export function NextPrev({
     <nav className={styles.nextPrev} aria-label="More work">
       <div>
         {prev ? (
-          <Link href={`/work/${prev.slug}/`} className={styles.nextPrevLink}>
+          <Link href={`/v2/work/${prev.slug}/`} className={styles.nextPrevLink}>
             <span className="label">← {prev.index}</span>
             <span className={styles.nextPrevTitle}>{prev.title}</span>
           </Link>
@@ -254,7 +254,7 @@ export function NextPrev({
       </div>
       <div className={styles.nextPrevRight}>
         {next ? (
-          <Link href={`/work/${next.slug}/`} className={styles.nextPrevLink}>
+          <Link href={`/v2/work/${next.slug}/`} className={styles.nextPrevLink}>
             <span className="label">{next.index} →</span>
             <span className={styles.nextPrevTitle}>{next.title}</span>
           </Link>

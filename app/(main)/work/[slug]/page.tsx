@@ -61,7 +61,7 @@ export default async function StudyPage({
     <article>
       {/* ---------------------------------------------------------------- */}
       <header className="sheetInner studyHead">
-        <Link href="/v2/#work" className="studyBack">
+        <Link href="/#work" className="studyBack">
           <i aria-hidden="true">←</i> All work
         </Link>
 
@@ -196,7 +196,7 @@ export default async function StudyPage({
       {/* ---------------------------------------------------------------- */}
       <nav className="pager" aria-label="More case studies">
         {prev ? (
-          <Link className="pagerLink" href={`/v2/work/${prev.slug}/`}>
+          <Link className="pagerLink" href={`/work/${prev.slug}/`}>
             <span className="mono">← Previous</span>
             <span className="pagerTitle">
               {prev.title[0]} {prev.title[1]}
@@ -206,7 +206,7 @@ export default async function StudyPage({
           <span className="pagerLink" />
         )}
         {next ? (
-          <Link className="pagerLink pagerLink--next" href={`/v2/work/${next.slug}/`}>
+          <Link className="pagerLink pagerLink--next" href={`/work/${next.slug}/`}>
             <span className="mono">Next →</span>
             <span className="pagerTitle">
               {next.title[0]} {next.title[1]}

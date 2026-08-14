@@ -8,7 +8,7 @@ import styles from "./Nav.module.css";
 
 export default function Nav() {
   const path = usePathname();
-  const isHome = path === "/";
+  const isHome = path === "/v2";
   const [lifted, setLifted] = useState(false);
 
   /**
@@ -29,14 +29,14 @@ export default function Nav() {
   return (
     <header className={styles.header} data-lifted={lifted ? "true" : "false"}>
       <div className={`frame ${styles.inner}`}>
-        <Link href="/" className={styles.wordmark}>
+        <Link href="/v2/" className={styles.wordmark}>
           <span className={styles.mark} aria-hidden="true" />
           {site.name}
         </Link>
         <nav aria-label="Primary" className={styles.nav}>
           {site.nav.map((item) => {
             const active =
-              item.href === "/" ? path === "/" : path.startsWith(item.href);
+              item.href === "/v2/" ? path === "/v2" : path.startsWith(item.href);
             return (
               <Link
                 key={item.href}

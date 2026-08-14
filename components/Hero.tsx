@@ -105,7 +105,7 @@ export default function Hero() {
         </p>
 
         <div className={s.actions}>
-          <Link href="/work/agentic-support/" className={s.primary}>
+          <Link href="/v2/work/agentic-support/" className={s.primary}>
             See the work <span aria-hidden="true">→</span>
           </Link>
           <a href={`mailto:${site.contact.email}`} className={s.secondary}>

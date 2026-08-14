@@ -7,9 +7,9 @@ import { profile } from "@/content/v2";
 import EyeMark from "./EyeMark";
 
 const LINKS = [
-  { href: "/v2/#work", label: "Work" },
-  { href: "/v2/about/", label: "About" },
-  { href: "/v2/#contact", label: "Contact" },
+  { href: "/#work", label: "Work" },
+  { href: "/about/", label: "About" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 /**
@@ -31,7 +31,7 @@ export default function Nav() {
   return (
     <div className="sheetInner">
       <nav className="nav" data-lifted={lifted} aria-label="Primary">
-        <Link href="/v2/" className="navMark">
+        <Link href="/" className="navMark">
           <EyeMark id="nav-eye" />
           {profile.name}
         </Link>
@@ -41,8 +41,8 @@ export default function Nav() {
             // Only the real routes can be "current"; the two in-page anchors
             // are not pages, so marking them would be a lie to a screen reader.
             const current =
-              (l.href === "/v2/about/" && path.startsWith("/v2/about")) ||
-              (l.href === "/v2/#work" && path === "/v2");
+              (l.href === "/about/" && path.startsWith("/about")) ||
+              (l.href === "/#work" && path === "/");
             return (
               <li key={l.href}>
                 <Link

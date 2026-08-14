@@ -1,210 +1,164 @@
 import Link from "next/link";
-import { profile } from "@/content/v2";
-import { Reveal, Kinetic, Counter } from "@/components/v2/motion";
-import Plate from "@/components/v2/Plate";
-import WorkGrid from "@/components/v2/WorkGrid";
+import { site, currently } from "@/content/site";
+import { caseStudies } from "@/content/caseStudies";
+import Hero from "@/components/Hero";
+import Reveal from "@/components/Reveal";
+import KeyArt from "@/components/KeyArt";
+import Photo from "@/components/Photo";
+import { HomeSchema } from "@/components/StructuredData";
+import s from "./page.module.css";
 
-/**
- * Renders `**bold**` spans in the hero subline as accent-coloured emphasis.
- * Small enough not to justify a markdown dependency, and it keeps the copy in
- * content/v2.ts readable as plain prose.
- */
-function withEmphasis(text: string) {
-  return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
-    i % 2 === 1 ? <b key={i}>{part}</b> : part,
-  );
-}
+const CLIENTS = ["Autodesk", "American Express", "Accenture", "Amtrak", "Fuzzy Math"];
 
-export default function V2Home() {
+const IMPACT = [
+  { value: "91%", label: "Instant digital resolution", note: "Agentic support, three products" },
+  { value: "87%", label: "Self-service resolution", note: "Conversational assistant" },
+  { value: "3", label: "Products, one autonomy policy", note: "AutoCAD · Revit · Fusion" },
+  { value: "200+", label: "Attendees at my TechX talk", note: "Directors, VPs, SVPs" },
+];
+
+export default function Home() {
   return (
     <>
-      {/* ------------------------------------------------------------------
-          HERO
-          An introduction, not a slogan: who I am, then what I care about,
-          with the portrait sitting between two offset planes. Type is
-          deliberately restrained — the warmth is carried by colour and
-          roundness rather than scale.
-         ------------------------------------------------------------------ */}
-      <header className="sheetInner hero">
-        <div>
-          <Kinetic
-            as="h1"
-            className="heroTitle"
-            text={profile.heroTitle}
-            trigger="load"
-            stagger={30}
-            delay={120}
-          />
+      <HomeSchema />
+      <Hero />
 
-          <Reveal delay={260}>
-            <p className="heroSub">{withEmphasis(profile.heroSub)}</p>
-
-            <div className="heroActions">
-              <a className="btn btn--primary" href="#work">
-                See the work <i aria-hidden="true">→</i>
-              </a>
-              <a className="btn btn--ghost" href={`mailto:${profile.contact.email}`}>
-                Get in touch
-              </a>
-            </div>
-          </Reveal>
-        </div>
-
-        <Reveal delay={200} className="heroArt">
-          <Plate slot={profile.portrait} priority />
-        </Reveal>
-      </header>
-
-      {/* ------------------------------------------------------------------
-          WORK
-         ------------------------------------------------------------------ */}
-      <section className="sheetInner section" id="work">
-        <Reveal className="sectionHead">
-          <div>
-            <span className="mono mono--accent sectionKicker">Selected work</span>
-            <h2 className="sectionTitle">Four projects, not fourteen</h2>
-          </div>
-        </Reveal>
-
-        <Reveal delay={80}>
-          <WorkGrid />
-        </Reveal>
-      </section>
-
-      {/* ------------------------------------------------------------------
-          PULL QUOTE
-          Placed here, straight after the work, because it is the sentence
-          that separates you from other designers applying to AI teams — it
-          should not need a click to find. The long form lives on /about.
-         ------------------------------------------------------------------ */}
-      <section className="pull">
-        <div className="sheetInner pullInner">
-          <span className="pullMark" aria-hidden="true">
-            &ldquo;
-          </span>
-          <Reveal>
-            <p className="pullText">{profile.pullQuote}</p>
-            <span className="mono pullAttr">
-              <Link href="/v2/about/">More on how I work &rarr;</Link>
-            </span>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------
-          IMPACT
-          Numbers count up, and every one carries its qualifier underneath.
-          A number without its limits is a liability in a design review, so
-          the caveat is part of the component rather than an optional extra.
-         ------------------------------------------------------------------ */}
-      <section className="band" id="impact">
-        <div className="sheetInner section">
-          <Reveal className="sectionHead">
-            <div>
-              <span className="mono mono--accent sectionKicker">Impact</span>
-              <h2 className="sectionTitle">What it added up to</h2>
-            </div>
-            <span className="mono">Every number is qualified</span>
-          </Reveal>
-
-          <div className="impactGrid">
-            {profile.impact.map((m, i) => (
-              <Reveal key={m.label} className="impactCell" delay={i * 70}>
-                <span className="impactValue">
-                  <Counter value={m.value} suffix={m.suffix} />
-                </span>
-                <span className="impactLabel">{m.label}</span>
-                <span className="impactCaveat">{m.caveat}</span>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------
-          PRACTICE
-         ------------------------------------------------------------------ */}
-      <section className="sheetInner section" id="practice">
-        <Reveal className="sectionHead">
-          <div>
-            <span className="mono mono--accent sectionKicker">How I work</span>
-            <h2 className="sectionTitle">Three positions</h2>
-          </div>
-        </Reveal>
-
-        <div className="practice">
-          {profile.practice.map((p, i) => (
-            <Reveal key={p.title} className="practiceItem" delay={i * 90}>
-              <span className="mono mono--accent">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="practiceTitle">{p.title}</h3>
-              <p className="practiceBody">{p.body}</p>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------
-          TESTIMONIALS
-          Sits immediately before the contact CTA: social proof, then the ask.
-          These are the only verified words on the page, so they get the
-          quietest treatment on it — white cards on the tinted band, no tint of
-          their own. The work tiles are meant to be the loud thing; borrowing
-          their pastels here would flatten the hierarchy.
-         ------------------------------------------------------------------ */}
-      <section className="band" id="testimonials">
-        <div className="sheetInner section">
-          <Reveal className="sectionHead">
-            <div>
-              <span className="mono mono--accent sectionKicker">Testimonials</span>
-              <h2 className="sectionTitle">What people I&rsquo;ve worked with say</h2>
-            </div>
-          </Reveal>
-
-          <ul className="quotes">
-            {profile.testimonials.map((q, i) => (
-              <Reveal as="li" key={q.name} className="quoteItem" delay={i * 90}>
-                {/* figure/blockquote/figcaption is the correct structure for an
-                    attributed quote, and figcaption is only valid inside a
-                    figure — so the card is the figure, not the list item. */}
-                <figure className="quoteCard">
-                  <span className="quoteMark" aria-hidden="true">
-                    &ldquo;
-                  </span>
-
-                  <blockquote className="quoteBody">
-                    {q.quote.map((para) => (
-                      <p key={para.slice(0, 40)}>{para}</p>
-                    ))}
-                  </blockquote>
-
-                  <figcaption className="quoteAttr">
-                    <span className="quoteName">{q.name}</span>
-                    <span className="quoteRole">{q.role}</span>
-                  </figcaption>
-                </figure>
-              </Reveal>
+      {/* ---------------- Where I've worked ---------------- */}
+      <section className={s.clientBand} aria-label="Organisations I've worked with">
+        <div className={`frame ${s.clientInner}`}>
+          <span className="label">Six years, shipping at</span>
+          <ul className={s.clients}>
+            {CLIENTS.map((c) => (
+              <li key={c}>{c}</li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* ------------------------------------------------------------------
-          CLOSER
-         ------------------------------------------------------------------ */}
-      <section className="sheetInner closer" id="contact">
-        <Reveal>
-          <h2 className="closerTitle">
-            Staffing a problem nobody has framed yet?
-          </h2>
-          <p className="closerNote">
-            {profile.status}. The fastest way to reach me is email — I answer
-            everything.
+      {/* ---------------- Positioning ---------------- */}
+      <Reveal as="section" className={`frame ${s.pitch}`}>
+        <div className={s.pitchText}>
+          <p className={s.pitchLead}>
+            I do my best work where a problem is still a paragraph of
+            disagreement rather than a brief.
           </p>
-          <a className="closerMail" href={`mailto:${profile.contact.email}`}>
-            {profile.contact.email} <i aria-hidden="true">→</i>
-          </a>
-        </Reveal>
+          <div className={s.pitchBody}>
+            <p>
+              My job there is to make it decidable: find the real constraint, put
+              a shape on the tradeoff, and give a room of people something
+              concrete enough to argue with.
+            </p>
+            <p>
+              Six years across enterprise tooling, financial workflows, and — for
+              the last three — AI systems that act on a customer’s behalf.
+            </p>
+          </div>
+        </div>
+
+        <Photo
+          base="/img/portrait"
+          widths={[700, 1000]}
+          alt="Drishti Taori sitting on a granite boulder at the edge of an alpine lake, feet in the shallows, looking out toward a pine treeline."
+          maxWidth="22rem"
+          sizes="(max-width: 56rem) min(100vw, 20rem), 22rem"
+          ratio="3 / 4"
+          className={s.pitchPhoto}
+        />
+      </Reveal>
+
+      {/* ---------------- Impact ---------------- */}
+      <section className={s.impact}>
+        <div className={`frame ${s.impactInner}`}>
+          {IMPACT.map((m, i) => (
+            <Reveal key={m.label} delay={i * 70}>
+              <div className={s.impactItem}>
+                <span className={s.impactValue}>{m.value}</span>
+                <span className={s.impactLabel}>{m.label}</span>
+                <span className={s.impactNote}>{m.note}</span>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <div className="frame">
+          <p className={s.impactCaveat}>
+            Every one of these numbers is qualified inside the case studies —
+            baselines, confounders, and the one I trust least.
+          </p>
+        </div>
       </section>
+
+      {/* ---------------- Work ---------------- */}
+      <section className="frame" id="work">
+        <div className={s.workHead}>
+          <h2 className={s.workTitle}>Selected work</h2>
+          <p className={s.workNote}>
+            Five pieces, not fifteen. Three full case studies, two shorter.
+            Each one names what it got wrong.
+          </p>
+        </div>
+
+        <ul className={s.grid}>
+          {caseStudies.map((c, i) => (
+            <Reveal as="li" key={c.slug} delay={(i % 2) * 80} className={s.gridItem}>
+              <Link href={`/v2/work/${c.slug}/`} className={s.card}>
+                <KeyArt kind={c.art} />
+
+                <div className={s.cardMeta}>
+                  <span className="label label--accent">{c.index}</span>
+                  <span className="label">
+                    {c.kind === "deep" ? "Case study" : "Short"} · {c.readingTime}
+                  </span>
+                </div>
+
+                <h3 className={s.cardTitle}>{c.title}</h3>
+                <p className={s.cardDeck}>{c.deck}</p>
+
+                <div className={s.cardStats}>
+                  {c.metrics.slice(0, 2).map((m) => (
+                    <span key={m.label} className={s.stat}>
+                      <b>{m.value}</b>
+                      {m.label}
+                    </span>
+                  ))}
+                </div>
+
+                <span className={s.cardCta}>
+                  {c.org} <span aria-hidden="true">→</span>
+                </span>
+              </Link>
+            </Reveal>
+          ))}
+        </ul>
+      </section>
+
+      {/* ---------------- Currently ---------------- */}
+      <Reveal as="section" className={`frame ${s.currently}`}>
+        <span className="label">{currently.title}</span>
+        <div className={s.currentlyBody}>
+          {currently.items.map((item) => (
+            <div key={item.label} className={s.currentlyItem}>
+              <span className="label label--accent">{item.label}</span>
+              <p>{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
+
+      {/* ---------------- Closing CTA ---------------- */}
+      <Reveal as="section" className={`frame ${s.closer}`}>
+        <h2 className={s.closerTitle}>
+          If you’re staffing a problem nobody has framed yet, I’d like
+          to hear about it.
+        </h2>
+        <div className={s.closerActions}>
+          <a href={`mailto:${site.contact.email}`} className={s.closerPrimary}>
+            {site.contact.email} <span aria-hidden="true">→</span>
+          </a>
+          <Link href="/v2/approach/" className={s.closerSecondary}>
+            How I work <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+      </Reveal>
     </>
   );
 }

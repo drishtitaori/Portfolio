@@ -32,7 +32,7 @@ export function Footer() {
             </a>
           </li>
           <li>
-            <a className="mono" href="/">
+            <a className="mono" href="/v2/">
               v1 of this site
             </a>
           </li>

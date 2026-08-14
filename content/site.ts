@@ -50,9 +50,9 @@ export const site = {
   },
 
   nav: [
-    { href: "/", label: "Work" },
-    { href: "/approach/", label: "Approach" },
-    { href: "/about/", label: "About" },
+    { href: "/v2/", label: "Work" },
+    { href: "/v2/approach/", label: "Approach" },
+    { href: "/v2/about/", label: "About" },
   ],
 };
 

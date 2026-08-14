@@ -79,7 +79,7 @@ export function WorkSchema({ study }: { study: CaseStudy }) {
     name: study.title,
     headline: study.deck,
     abstract: study.hook,
-    url: `${site.url}/work/${study.slug}/`,
+    url: `${site.url}/v2/work/${study.slug}/`,
     author: { "@type": "Person", name: site.name, url: site.url },
     creator: { "@type": "Person", name: site.name, url: site.url },
     about: study.tags,
@@ -109,7 +109,7 @@ export function HomeSchema() {
     hasPart: caseStudies.map((c) => ({
       "@type": "CreativeWork",
       name: c.title,
-      url: `${site.url}/work/${c.slug}/`,
+      url: `${site.url}/v2/work/${c.slug}/`,
       abstract: c.deck,
     })),
   };
