@@ -14,7 +14,13 @@ import type { Slot } from "@/content/v2";
  *
  * Uses a plain <img>, not next/image: this site is a static export with
  * `images.unoptimized`, so next/image would add weight and buy nothing.
+ *
+ * Because it's a plain <img>, Next won't auto-prefix the src with basePath the
+ * way it does for next/image and next/link, so we prefix it manually for the
+ * GitHub Pages subpath deploy.
  */
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export default function Plate({
   slot,
   className = "",
@@ -32,7 +38,7 @@ export default function Plate({
       <div className={`plate ${className}`.trim()} style={style}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={slot.src}
+          src={`${BASE_PATH}${slot.src}`}
           alt={slot.alt}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
