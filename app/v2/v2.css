@@ -1,89 +1,87 @@
 /* ============================================================================
-   v2 — "SHEET"
+   v2 — "STUDIO"
    ----------------------------------------------------------------------------
-   A drafting-sheet reading of a portfolio.
+   Warm, friendly, professional. White page, warm near-black ink, one magenta
+   accent, and a set of pastel tinted tiles that carry the work.
 
-   The subject designs for AutoCAD, Revit and Fusion, so the measurement layer
-   from those tools — extension ticks, dimension lines, outward arrowheads,
-   notched labels — is borrowed as this site's structural device. It is not
-   decoration: the same dimension line that measures the masthead becomes the
-   scrollbar for the work rail.
+   Two type voices doing different jobs: a geometric sans for everything you
+   read, and a high-contrast serif reserved for project titles. That pairing is
+   what stops a white page reading as a template — the serif arrives only where
+   the work does, so it reads as a byline rather than decoration.
 
-   Ground is paper stock — a cool off-white, not cream — with near-black line
-   work over it. The sheet is now literally a sheet rather than an inverted one.
-
-   ACCENT: volt has three roles, and they are not interchangeable. On paper the
-   lime is unreadable as type (about 1.3:1 against the ground) but excellent as
-   a fill, so it became the highlighter — which is honest to a page built out of
-   annotation marks. Type that needs to carry accent uses the darkened
-   `--accent-text`; rules and outlines that need to read use `--accent-line`,
-   which is simply ink. On paper, emphasis comes from weight and darkness. Never
-   set `--accent-fill` as a text colour.
+   Unlike the previous direction, display type here is restrained: the hero caps
+   at about 52px. The warmth comes from colour and roundness, not scale.
 
    SCOPE: every rule is prefixed `.v2`. The v1 site shares this app's
    globals.css and must not be touched by anything in here. The one deliberate
-   exception is the `html:has(.v2) body` rule, which stops the v1 paper colour
-   showing through on overscroll.
+   exception is `html:has(.v2) body`, which stops v1's paper colour showing
+   through on overscroll.
    ========================================================================== */
 
 .v2 {
-  /* --- Ground & ink ------------------------------------------------------ */
-  --ground: #f1f1ec; /* paper stock */
-  --panel: #ffffff; /* raised: briefs, hover states */
-  --panel-lit: #fafaf7;
-  --sunken: #e2e2da; /* recessed: empty image plates */
-  --ink-strong: #16161a;
-  --ink-soft: #62625c; /* 5.4:1 on paper */
-  --ink-faint: #67675f; /* 4.8:1 — the floor for caveats and captions */
-  --rule: #dedfd8;
-  --rule-bold: #c6c6be;
+  /* --- Ground & ink ------------------------------------------------------
+     Neutrals carry a faint teal undertone so they sit inside the peacock
+     family rather than fighting it. */
+  --paper: #ffffff;
+  --paper-tint: #f6f9f9; /* section bands */
+  --ink: #1f2628; /* cool near-black, not pure */
+  --ink-soft: #556063; /* 6.3:1 on white */
+  --ink-faint: #6a7477; /* 4.8:1 — the floor for captions and labels */
+  --rule: #e3e9e9;
+  --rule-bold: #c9d2d3;
 
-  /* Not a text colour. The dimension lines are drawn geometry and want to stay
-     delicate; `--ink-faint` had to darken to clear WCAG AA for the caveats and
-     captions that share it, which would have made the drawing look heavy. */
-  --hairline: #a3a39a;
+  /* --- Accent: peacock ----------------------------------------------------
+     A peacock's three hues are a deep teal-blue, an emerald green and an
+     indigo-violet. Teal is the one that carries type — at 5.5:1 on white it
+     clears AA comfortably, which is why it's the primary rather than the green
+     (too light to read) or the indigo (too easily mistaken for plain navy). */
+  --accent: #0f7480; /* peacock teal — 5.5:1 on white */
+  --accent-deep: #0a5a63; /* hover / small text needing more weight */
+  --accent-wash: #e7f3f4;
+  --on-accent: #ffffff;
 
-  /* --- Volt, in its three roles ------------------------------------------ */
-  --accent-fill: #e4ff4f; /* backgrounds and highlights only */
-  --accent-text: #4a5600; /* accent as type — 6.9:1 on paper */
-  --accent-line: #16161a; /* accent as a rule, border or focus ring */
-  --on-accent: #14180a; /* type sitting on the fill */
+  /* The other two feathers. Used only in the gradient on the eye mark and the
+     hero frame — never as flat fills, so the palette stays disciplined. */
+  --peacock-green: #12876a;
+  --peacock-indigo: #3b3a8c;
 
-  /* --- Rust: reserved for "what went wrong". Never decorative. ----------- */
-  --rust: #a8360f;
-  --rust-wash: #fbf0ea;
-
-  /* Aliases so rules inherited from globals.css (focus rings, ::selection,
-     link hover, h1–h4) resolve against this palette instead of v1's. */
-  --accent: var(--accent-text);
-  --paper: var(--ground);
-  --ink: var(--ink-strong);
+  /* --- Tile tints ---------------------------------------------------------
+     One per project, assigned in content/v2.ts. Four cool hues far enough
+     apart to read as different at a glance, all light enough that the ink
+     clears AA on every one of them. */
+  --tint-teal: #e2f1f1;
+  --tint-green: #e5f2e8;
+  --tint-indigo: #eae9f7;
+  --tint-blue: #e3edf8;
+  --tint-cyan: #e0f0f5;
+  --tint-slate: #e9eef0;
 
   /* --- Type --------------------------------------------------------------
-     Three faces, three jobs, no overlap.
-       display — Bricolage Grotesque, variable opsz + wdth. The optical-size
-                 axis means the masthead and a card title are genuinely
-                 different cuts, not one cut scaled.
-       body    — Instrument Sans. Slightly narrow, quiet, gets out of the way.
-       mono    — Martian Mono. The annotation voice. Reads as an instrument
-                 readout, which is the point. */
-  --display: var(--v2-display), "Helvetica Neue", sans-serif;
-  --body: var(--v2-body), -apple-system, BlinkMacSystemFont, sans-serif;
-  --mono: var(--v2-mono), ui-monospace, "SF Mono", Menlo, monospace;
+     sans  — Plus Jakarta Sans. Geometric, tall x-height, slightly narrow.
+             The closest freely-licensed stand-in for Calibre.
+     serif — Playfair Display. Project titles only. Never body, never nav. */
+  --sans: var(--v2-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  --serif: var(--v2-serif), Georgia, "Times New Roman", serif;
+
+  --display: var(--sans);
+  --body: var(--sans);
+  --mono: var(--sans);
   --display-weight: 600;
 
-  /* Capped at 8.75rem rather than as large as it will go: three lines of mega
-     type plus the dimension line has to leave the standfirst above the fold on
-     a 900px laptop, or the hero says nothing but its own headline. */
-  --t-mega: clamp(2.9rem, 0.4rem + 9.4vw, 8.75rem);
-  --t-giant: clamp(2.25rem, 0.9rem + 5.6vw, 6rem);
-  --t-h1: clamp(1.9rem, 1.1rem + 3.4vw, 3.75rem);
-  --t-h2: clamp(1.45rem, 1.05rem + 1.9vw, 2.4rem);
-  --t-h3: clamp(1.1rem, 0.98rem + 0.6vw, 1.45rem);
-  --t-lead: clamp(1.05rem, 0.96rem + 0.55vw, 1.4rem);
-  --t-body: 1.0625rem;
+  /* Stepped down about a quarter from the first pass, which read as shouting at
+     desktop width — the hero was five lines of 52px. The reference runs a 50px
+     hero over a much shorter sentence; ours is longer, so it has to be smaller
+     to occupy the same share of the screen. */
+  --t-hero: clamp(1.6rem, 1rem + 1.9vw, 2.5rem);
+  --t-h1: clamp(1.5rem, 1.05rem + 1.5vw, 2.25rem);
+  --t-h2: clamp(1.2rem, 1.02rem + 0.75vw, 1.6rem);
+  --t-h3: clamp(1.05rem, 0.98rem + 0.35vw, 1.25rem);
+  --t-tile: clamp(1.25rem, 0.95rem + 1.25vw, 1.85rem);
+  --t-lead: clamp(1rem, 0.97rem + 0.2vw, 1.125rem);
+  --t-body: 1rem;
   --t-sm: 0.9375rem;
-  --t-mono: 0.6875rem;
+  --t-xs: 0.8125rem;
+  --t-label: 0.75rem;
 
   /* --- Space -------------------------------------------------------------- */
   --s1: 0.25rem;
@@ -94,37 +92,31 @@
   --s6: 2rem;
   --s7: 3rem;
   --s8: 4.5rem;
-  --s9: 7rem;
-  --s10: 10rem;
+  --s9: 6.5rem;
 
-  /* --- Sheet geometry ------------------------------------------------------
-     `--rail` is the width of the annotated margin down each side. It collapses
-     to zero below the tablet breakpoint, where the sheet metaphor would cost
-     more reading width than it earns. */
-  --rail: 3.25rem;
-  --gutter: clamp(1.25rem, 4vw, 3rem);
+  /* --- Geometry ----------------------------------------------------------- */
+  --shell: 73rem;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
   --measure: 36rem;
-  --sheet: 84rem;
+  --r-tile: 1.5rem; /* the roundness that carries the friendliness */
+  --r-sm: 0.625rem;
 
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   position: relative;
   min-height: 100vh;
-  background: var(--ground);
-  color: var(--ink-strong);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--body);
   font-size: var(--t-body);
   line-height: 1.6;
   overflow-x: clip;
-  /* No `antialiased` here: on a light ground it thins the strokes and makes
-     Bricolage look anaemic at body sizes. Subpixel rendering is correct on paper. */
   text-rendering: optimizeLegibility;
 }
 
-/* Stops v1's warm paper colour flashing behind the sheet on overscroll. */
 html:has(.v2) body {
-  background: #f1f1ec;
+  background: #ffffff;
 }
 
 /* --- Base overrides, scoped ------------------------------------------------ */
@@ -132,10 +124,10 @@ html:has(.v2) body {
 .v2 h1,
 .v2 h2,
 .v2 h3 {
-  font-family: var(--display);
-  font-weight: var(--display-weight);
-  letter-spacing: -0.03em;
-  line-height: 1.04;
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.16;
   text-wrap: balance;
 }
 
@@ -149,44 +141,45 @@ html:has(.v2) body {
 }
 
 .v2 ::selection {
-  background: var(--accent-fill);
+  background: var(--accent);
   color: var(--on-accent);
 }
 
 .v2 :focus-visible {
-  outline: 2px solid var(--accent-line);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 1px;
+  border-radius: 3px;
 }
 
 /* --- Shared primitives ----------------------------------------------------- */
 
 .v2 .sheetInner {
   width: 100%;
-  max-width: var(--sheet);
+  max-width: var(--shell);
   margin-inline: auto;
-  padding-inline: calc(var(--gutter) + var(--rail));
+  padding-inline: var(--gutter);
 }
 
+/* Kept the name `mono` so the components don't churn, but in this direction the
+   utility voice is the sans at label size — a monospace would fight the
+   warmth. */
 .v2 .mono {
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.16em;
+  font-family: var(--sans);
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--ink-soft);
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
+  color: var(--ink-faint);
 }
 
 .v2 .mono--accent {
-  color: var(--accent-text);
+  color: var(--accent-deep);
 }
 
 .v2 .lead {
   font-size: var(--t-lead);
-  line-height: 1.5;
-  color: var(--ink-strong);
-  letter-spacing: -0.008em;
+  line-height: 1.55;
+  color: var(--ink-soft);
 }
 
 .v2 .quiet {
@@ -196,106 +189,6 @@ html:has(.v2) body {
 .v2 .hr {
   border: 0;
   border-top: 1px solid var(--rule);
-}
-
-/* ============================================================================
-   THE SHEET FRAME
-   Fixed hairlines down each margin with a rotated annotation, the way a
-   drawing sheet carries its own metadata outside the drawing.
-   ========================================================================== */
-
-/* Centred on the same box `.sheetInner` centres on.
-   Positioning these from `100vw` looked right until the ground went light: vw
-   includes the classic scrollbar and ignores the max-width centring, so the
-   rails sat ~50px inboard of the content edge and their annotation printed
-   straight over the work cards. A fixed element with left:0/right:0, a
-   max-width and auto inline margins centres on the viewport box, which is the
-   same box the page content is centred on. */
-.v2 .rails {
-  position: fixed;
-  inset: 0;
-  max-width: var(--sheet);
-  margin-inline: auto;
-  pointer-events: none;
-  z-index: 3;
-}
-
-.v2 .rail {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: var(--rail);
-  border-inline-color: var(--rule);
-  border-inline-style: solid;
-  display: grid;
-  place-items: center;
-}
-
-.v2 .rail--l {
-  left: var(--gutter);
-  border-inline-width: 0 1px;
-}
-
-.v2 .rail--r {
-  right: var(--gutter);
-  border-inline-width: 1px 0;
-}
-
-/* The paper chip behind the text keeps the annotation readable when a card is
-   dragged underneath it — the work rail is the one thing on the page that
-   scrolls through the margin. */
-.v2 .railText {
-  writing-mode: vertical-rl;
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  white-space: nowrap;
-  background: var(--ground);
-  padding-block: 0.75rem;
-}
-
-.v2 .rail--l .railText {
-  rotate: 180deg;
-}
-
-/* Corner ticks — the registration marks on a drawing sheet. */
-.v2 .tick {
-  position: absolute;
-  width: 9px;
-  height: 9px;
-  border: 1px solid var(--rule-bold);
-}
-
-.v2 .tick--tl {
-  top: 0;
-  left: 0;
-  border-width: 1px 0 0 1px;
-}
-.v2 .tick--bl {
-  bottom: 0;
-  left: 0;
-  border-width: 0 0 1px 1px;
-}
-.v2 .tick--tr {
-  top: 0;
-  right: 0;
-  border-width: 1px 1px 0 0;
-}
-.v2 .tick--br {
-  bottom: 0;
-  right: 0;
-  border-width: 0 1px 1px 0;
-}
-
-@media (max-width: 60rem) {
-  .v2 {
-    --rail: 0rem;
-  }
-  .v2 .rails {
-    display: none;
-  }
 }
 
 /* ============================================================================
@@ -310,76 +203,110 @@ html:has(.v2) body {
   align-items: center;
   justify-content: space-between;
   gap: var(--s4);
-  height: 4rem;
-  background: color-mix(in oklab, var(--ground) 82%, transparent);
-  backdrop-filter: blur(14px);
+  height: 5rem;
+  background: color-mix(in oklab, var(--paper) 88%, transparent);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  transition: border-color 0.3s var(--ease);
 }
 
 .v2 .nav[data-lifted="true"] {
   border-bottom-color: var(--rule);
 }
 
+/* The mark: the eye, then the wordmark. See components/v2/EyeMark.tsx — the
+   glyph is the name, "drishti" being Sanskrit for sight. */
 .v2 .navMark {
   display: inline-flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  flex: 0 0 auto;
-  /* Wrapping put "Taori" on its own line and shoved it into the links. */
-  white-space: nowrap;
-  font-family: var(--display);
+  align-items: center;
+  gap: 0.6rem;
   font-weight: 700;
-  font-size: clamp(0.9375rem, 0.85rem + 0.4vw, 1.0625rem);
-  letter-spacing: -0.025em;
-  color: var(--ink-strong);
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  white-space: nowrap;
 }
 
-/* The status dot. Pulses only while the page is idle and motion is allowed.
-   A bare lime dot disappears on paper, so it gets a hairline of ink around it —
-   the same way a spot colour is trapped against a keyline in print. */
-.v2 .navDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent-fill);
-  border: 1px solid var(--accent-line);
-  translate: 0 -0.15em;
-  animation: v2-pulse 2.4s var(--ease) infinite;
+.v2 .eye {
+  display: block;
+  width: 2.45rem;
+  height: 2.45rem;
+  flex: 0 0 auto;
+  overflow: visible;
 }
 
-@keyframes v2-pulse {
+/* At rest the lid is scaled to nothing from its top edge, so the eye is open.
+   The blink drops it to full height and lifts it again — two fast frames near
+   the end of a long cycle, which is roughly how often a person actually blinks
+   and keeps it from reading as a nervous tic. */
+.v2 .eyeLid {
+  transform-origin: 16px 0;
+  transform: scaleY(0);
+  animation: v2-blink 6s var(--ease) infinite;
+}
+
+@keyframes v2-blink {
+  0%,
+  88%,
+  100% {
+    transform: scaleY(0);
+  }
+  92%,
+  94% {
+    transform: scaleY(1);
+  }
+}
+
+/* Blink on demand: hovering or focusing the mark closes the eye once. */
+.v2 .navMark:hover .eyeLid,
+.v2 .navMark:focus-visible .eyeLid {
+  animation: v2-blink-once 0.42s var(--ease) 1;
+}
+
+@keyframes v2-blink-once {
   0%,
   100% {
-    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent-line) 40%, transparent);
+    transform: scaleY(0);
   }
-  60% {
-    box-shadow: 0 0 0 7px transparent;
+  45%,
+  55% {
+    transform: scaleY(1);
+  }
+}
+
+/* The iris tracks nothing, but it does dilate on hover — a second, quieter
+   sign of life for anyone who lingers on the logo. */
+.v2 .navMark:hover .eye circle:nth-of-type(2) {
+  r: 3.4;
+}
+
+.v2 .eye circle:nth-of-type(2) {
+  transition: r 0.35s var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2 .eyeLid {
+    animation: none;
+  }
+  .v2 .navMark:hover .eyeLid,
+  .v2 .navMark:focus-visible .eyeLid {
+    animation: none;
   }
 }
 
 .v2 .navLinks {
   display: flex;
   align-items: center;
-  gap: clamp(0.75rem, 2.6vw, 2.25rem);
+  gap: clamp(0.9rem, 2.6vw, 2.5rem);
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Below 26rem the three links plus the name will not fit on one line at any
-   readable size. Practice is the one a visitor is least likely to be hunting
-   for, and it is still one scroll away. */
-@media (max-width: 26rem) {
-  .v2 .navLinks li:nth-child(2) {
-    display: none;
-  }
-}
-
 .v2 .navLink {
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.16em;
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-soft);
   transition: color 0.2s var(--ease);
@@ -387,34 +314,25 @@ html:has(.v2) body {
 
 .v2 .navLink:hover,
 .v2 .navLink[aria-current="page"] {
-  color: var(--ink-strong);
-}
-
-.v2 .navLink[aria-current="page"] {
-  text-decoration: underline;
-  text-decoration-color: var(--accent-fill);
-  text-underline-offset: 0.5em;
-  text-decoration-thickness: 2px;
+  color: var(--accent);
 }
 
 .v2 .navCta {
   display: none;
-  padding: 0.45rem 0.85rem;
-  border: 1px solid var(--rule-bold);
-  border-radius: 2px;
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.16em;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ink-strong);
-  transition: background 0.2s var(--ease), color 0.2s var(--ease),
-    border-color 0.2s var(--ease);
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
 }
 
 .v2 .navCta:hover {
-  background: var(--accent-fill);
-  border-color: var(--accent-line);
-  color: var(--on-accent);
+  background: var(--accent);
+  transform: translateY(-1px);
 }
 
 @media (min-width: 44rem) {
@@ -423,138 +341,16 @@ html:has(.v2) body {
   }
 }
 
-/* ============================================================================
-   DIMENSION LINE — the signature
-   ----------------------------------------------------------------------------
-   Extension ticks at both ends, outward arrowheads, a notched label. Draws
-   itself in on load. With `data-progress` it doubles as the work rail's
-   scrollbar: the measured span fills volt from the left as you scroll.
-   ========================================================================== */
-
-.v2 .dim {
-  --dim-progress: 0;
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  width: 100%;
-  color: var(--hairline);
-}
-
-/* The measured span, inked in. Zero-width unless the line is being used as the
-   work rail's scrollbar, so the static dimension stays a plain hairline.
-   Ink rather than volt: a 1px lime rule is invisible on paper, and this one has
-   to be read — it is the only indication of how far along the rail you are.
-   Two pixels tall so it reads as "drawn over" the hairline beneath it. */
-.v2 .dimFill {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  translate: 0 -50%;
-  height: 2px;
-  width: calc(var(--dim-progress) * 100%);
-  background: var(--accent-line);
-  pointer-events: none;
-}
-
-.v2 .dimTick {
-  flex: 0 0 auto;
-  width: 1px;
-  height: 22px;
-  background: currentColor;
-  transform-origin: center;
-  animation: v2-tick 0.4s var(--ease-out) both;
-}
-
-.v2 .dimArm {
-  position: relative;
-  flex: 1 1 auto;
-  height: 1px;
-  background: currentColor;
-  animation: v2-arm 0.65s var(--ease-out) 0.18s both;
-}
-
-.v2 .dimArm--r {
-  transform-origin: left;
-}
-.v2 .dimArm--l {
-  transform-origin: right;
-}
-
-/* Arrowheads point outward toward the extension ticks, as they do on a
-   real dimension. Drawn as CSS triangles so they never blur. */
-.v2 .dimArrow {
-  position: absolute;
-  top: 50%;
-  translate: 0 -50%;
-  width: 0;
-  height: 0;
-  border-block: 3.5px solid transparent;
-  animation: v2-fade 0.3s var(--ease) 0.7s both;
-}
-
-.v2 .dimArrow--l {
-  left: 0;
-  border-right: 7px solid currentColor;
-}
-.v2 .dimArrow--r {
-  right: 0;
-  border-left: 7px solid currentColor;
-}
-
-.v2 .dimLabel {
-  position: relative;
-  z-index: 1;
-  flex: 0 0 auto;
-  /* Sits over the fill rather than being struck through by it. */
-  background: var(--ground);
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  white-space: nowrap;
-  animation: v2-fade 0.45s var(--ease) 0.62s both;
-}
-
-.v2 .dim[data-live="true"] .dimLabel {
-  color: var(--accent-text);
-}
-
-@keyframes v2-tick {
-  from {
-    scale: 1 0;
-    opacity: 0;
-  }
-  to {
-    scale: 1 1;
-    opacity: 1;
-  }
-}
-
-@keyframes v2-arm {
-  from {
-    scale: 0 1;
-  }
-  to {
-    scale: 1 1;
-  }
-}
-
-@keyframes v2-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+@media (max-width: 26rem) {
+  .v2 .navLinks li:nth-child(2) {
+    display: none;
   }
 }
 
 /* ============================================================================
-   MOTION — scroll choreography
-   ----------------------------------------------------------------------------
-   Progressive enhancement: `.rv` only hides once the boot script has set
-   `html.js`, so with JS off nothing is invisible.
+   MOTION
+   Progressive enhancement: `.rv` only hides once the boot script sets
+   `html.js`, so nothing is invisible without JavaScript.
    ========================================================================== */
 
 .v2 .rv {
@@ -563,8 +359,8 @@ html:has(.v2) body {
 
 html.js .v2 .rv {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out);
+  transform: translateY(16px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
   transition-delay: var(--rv-delay, 0ms);
 }
 
@@ -573,15 +369,10 @@ html.js .v2 .rv[data-in="true"] {
   transform: none;
 }
 
-/* Word-level kinetic type. Each word rides up from behind a clipping mask.
-   Note: no `display` here. Kinetic renders onto whatever element it is asked
-   for, and forcing `inline` silently killed max-width wherever it was used on
-   a block — the thesis ran the full 71rem instead of its measure. */
 .v2 .kinWord {
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
-  /* Room for descenders — without this, g/y/p get clipped by the mask. */
   padding-bottom: 0.14em;
   margin-bottom: -0.14em;
 }
@@ -600,218 +391,162 @@ html.js .v2 .kin .kinWord > * {
   transition-delay: var(--kin-delay, 0ms);
 }
 
+/* The accent words in the hero headline. */
+.v2 .kin em {
+  font-style: normal;
+  color: var(--accent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html.js .v2 .rv,
   html.js .v2 .kin[data-in="false"] .kinWord > * {
     opacity: 1;
     transform: none;
   }
-  .v2 .dimTick,
-  .v2 .dimArm,
-  .v2 .dimArrow,
-  .v2 .dimLabel,
-  .v2 .navDot {
-    animation: none;
-  }
-  .v2 .marqueeTrack {
-    animation: none;
-  }
 }
 
 /* ============================================================================
-   MASTHEAD
+   HERO
    ========================================================================== */
 
-.v2 .masthead {
-  padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2.5rem, 5vw, 4rem);
+.v2 .hero {
+  /* Bottom padding trimmed: with the type a quarter smaller the hero got short
+     and left a dead band above the fold. The work grid should just break the
+     bottom edge of the viewport — that's what makes people scroll. */
+  padding-block: clamp(2.5rem, 6vw, 5rem) clamp(1.75rem, 4vw, 3rem);
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+  align-items: center;
 }
 
-.v2 .mastheadMeta {
+@media (min-width: 60rem) {
+  .v2 .hero {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+}
+
+.v2 .heroTitle {
+  font-size: var(--t-hero);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin: 0;
+  max-width: 22ch;
+}
+
+.v2 .heroSub {
+  margin: clamp(1.25rem, 3vw, 1.75rem) 0 0;
+  font-size: var(--t-lead);
+  color: var(--ink-soft);
+  max-width: 32rem;
+}
+
+.v2 .heroSub b {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.v2 .heroActions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1.25rem;
-  margin-bottom: clamp(1.5rem, 4vw, 2.75rem);
+  gap: 0.875rem;
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
 }
 
-.v2 .mastheadStatus {
+.v2 .btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--accent-text);
+  padding: 0.8rem 1.5rem;
+  border-radius: 999px;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  transition: transform 0.2s var(--ease), background 0.2s var(--ease),
+    border-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 
-.v2 .mastheadStatus::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
+.v2 .btn i {
+  font-style: normal;
+  transition: translate 0.25s var(--ease);
 }
 
-.v2 .mastheadTitle {
-  font-size: var(--t-mega);
-  font-weight: 700;
-  line-height: 0.88;
-  letter-spacing: -0.045em;
-  font-variation-settings: "opsz" 96, "wdth" 100;
-  margin: 0;
+.v2 .btn:hover i {
+  translate: 4px 0;
 }
 
-.v2 .mastheadLine {
-  display: block;
-}
-
-/* The third line is struck through with the highlighter.
-   This is where the volt goes on paper. It is also the payoff of the kinetic
-   masks: the block lands first and the letters rise into it, so the line reads
-   as being marked up rather than as coloured text.
-   `line-height: 1` gives the box an ascender-to-descender fit; the negative
-   block margins claw back the difference so the 0.88 rhythm of the other two
-   lines is untouched. */
-.v2 .mastheadLine--accent {
-  display: inline-block;
-  background: var(--accent-fill);
+.v2 .btn--primary {
+  background: var(--accent);
   color: var(--on-accent);
-  line-height: 1;
-  padding: 0.04em 0.1em 0.06em;
-  margin-block: -0.04em -0.06em;
-  margin-inline-start: -0.1em;
 }
 
-.v2 .mastheadBody {
-  display: grid;
-  gap: clamp(1.75rem, 5vw, 3.5rem);
-  /* Top-aligned, not bottom: bottom-aligning pushed the standfirst below the
-     fold behind the portrait, so the hero read as a headline and nothing else. */
-  align-items: start;
-  margin-top: clamp(1.5rem, 3.5vw, 2.5rem);
+.v2 .btn--primary:hover {
+  background: var(--accent-deep);
+  transform: translateY(-2px);
 }
 
-@media (min-width: 56rem) {
-  .v2 .mastheadBody {
-    grid-template-columns: minmax(0, 1fr) 11rem;
-    justify-content: space-between;
-  }
-}
-
-/* The portrait is the only photograph above the fold, so it stays small and
-   sits on the baseline of the standfirst rather than competing with the type. */
-.v2 .mastheadPortrait {
-  display: none;
-}
-
-@media (min-width: 56rem) {
-  .v2 .mastheadPortrait {
-    display: block;
-    border: 1px solid var(--rule);
-  }
-}
-
-.v2 .mastheadStandfirst {
-  max-width: 34rem;
-  font-size: var(--t-lead);
-  line-height: 1.5;
-  color: var(--ink-soft);
-}
-
-.v2 .mastheadStandfirst b {
-  color: var(--ink-strong);
-  font-weight: 500;
-}
-
-.v2 .mastheadDim {
-  margin-top: clamp(1.75rem, 4vw, 2.75rem);
-}
-
-.v2 .scrollCue {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: var(--s5);
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-
-.v2 .scrollCue span {
-  animation: v2-nudge 1.9s var(--ease) infinite;
-}
-
-@keyframes v2-nudge {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 4px;
-  }
-}
-
-/* ============================================================================
-   MARQUEE — the client band
-   ========================================================================== */
-
-.v2 .marquee {
-  position: relative;
-  overflow: hidden;
-  border-block: 1px solid var(--rule);
-  padding-block: 1.1rem;
-  mask-image: linear-gradient(
-    90deg,
-    transparent,
-    #000 8%,
-    #000 92%,
-    transparent
-  );
-}
-
-.v2 .marqueeTrack {
-  display: flex;
-  width: max-content;
-  animation: v2-marquee 38s linear infinite;
-}
-
-.v2 .marquee:hover .marqueeTrack,
-.v2 .marquee:focus-within .marqueeTrack {
-  animation-play-state: paused;
-}
-
-.v2 .marqueeGroup {
-  display: flex;
-  align-items: center;
-  flex: 0 0 auto;
-}
-
-.v2 .marqueeItem {
-  display: inline-flex;
-  align-items: center;
-  gap: clamp(1.75rem, 4vw, 3rem);
-  padding-inline: clamp(0.875rem, 2vw, 1.5rem);
-  font-family: var(--display);
-  font-size: clamp(1rem, 2vw, 1.375rem);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--ink-soft);
-  white-space: nowrap;
-}
-
-/* The separator between client names. A 5px lime lozenge vanished on paper, so
-   it is drawn as an outline instead — a registration mark, not a bullet. */
-.v2 .marqueeItem::after {
-  content: "";
-  width: 6px;
-  height: 6px;
+.v2 .btn--ghost {
   border: 1px solid var(--rule-bold);
-  rotate: 45deg;
+  color: var(--ink);
 }
 
-@keyframes v2-marquee {
-  to {
-    translate: -50% 0;
-  }
+.v2 .btn--ghost:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+
+/* --- The framed portrait: the signature -----------------------------------
+   A gradient block offset behind the photo and a tinted block offset in front
+   of nothing, so the image sits between two planes. This is the one place the
+   gradient appears; everywhere else the accent is flat.
+   -------------------------------------------------------------------------- */
+
+.v2 .heroArt {
+  position: relative;
+  width: 100%;
+  /* Down from 25rem. With the type a quarter smaller, a 400px portrait became
+     the loudest thing on the page. */
+  max-width: 21rem;
+  margin-inline: auto;
+  isolation: isolate;
+}
+
+.v2 .heroArt::before {
+  content: "";
+  position: absolute;
+  inset: -0.9rem 1.6rem 1.6rem -0.9rem;
+  border-radius: var(--r-tile);
+  background: linear-gradient(150deg, var(--peacock-indigo), var(--accent) 55%, var(--peacock-green));
+  z-index: -2;
+}
+
+.v2 .heroArt::after {
+  content: "";
+  position: absolute;
+  inset: 1.6rem -0.9rem -0.9rem 1.6rem;
+  border-radius: var(--r-tile);
+  background: var(--tint-indigo);
+  z-index: -3;
+}
+
+.v2 .heroArt .plate {
+  border-radius: var(--r-tile);
+  /* Opaque, so the gradient block behind can't show through while the image
+     loads. Only matters for the empty state now that the photo is in. */
+  background: #e6eaea;
+  /* NOT desaturated, unlike the reference.
+     Their portrait is a studio shot where colour adds nothing, so mono reads as
+     a choice. This one is a river, a blue sky and gold hills — the colour is
+     most of the picture, and the water happens to sit right on the peacock teal
+     the rest of the palette is built from. Greyscaling it would throw away both
+     the photograph and the only accidental gift in the palette.
+     A small lift on hover instead, so there's still a moment of life. */
+  filter: saturate(1.02);
+  transition: filter 0.6s var(--ease), transform 0.6s var(--ease-out);
+}
+
+.v2 .heroArt:hover .plate {
+  filter: saturate(1.12) contrast(1.03);
 }
 
 /* ============================================================================
@@ -819,7 +554,12 @@ html.js .v2 .kin .kinWord > * {
    ========================================================================== */
 
 .v2 .section {
-  padding-block: clamp(3.25rem, 7vw, 6rem);
+  padding-block: clamp(3rem, 7vw, 5.5rem);
+}
+
+.v2 .band {
+  background: var(--paper-tint);
+  border-block: 1px solid var(--rule);
 }
 
 .v2 .sectionHead {
@@ -827,9 +567,7 @@ html.js .v2 .kin .kinWord > * {
   align-items: baseline;
   justify-content: space-between;
   gap: var(--s5);
-  padding-bottom: var(--s4);
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
 }
 
 .v2 .sectionTitle {
@@ -838,8 +576,11 @@ html.js .v2 .kin .kinWord > * {
   margin: 0;
 }
 
-/* Side by side, both halves wrap into two ragged lines on a phone. Stacking
-   costs one line of height and reads properly. */
+.v2 .sectionKicker {
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
 @media (max-width: 40rem) {
   .v2 .sectionHead {
     flex-direction: column;
@@ -848,249 +589,118 @@ html.js .v2 .kin .kinWord > * {
   }
 }
 
-/* --- Thesis --------------------------------------------------------------- */
-
-/* Deliberately smaller than the masthead. This is the second-loudest thing on
-   the page, not a rival to the first — at display size it ran eight lines and
-   read as shouting rather than as a considered sentence. */
-.v2 .thesis {
-  /* ~45 characters a line at the top of the clamp — five or six lines of
-     display type, which is as long as a single sentence can hold. */
-  max-width: 62rem;
-  font-family: var(--display);
-  font-size: clamp(1.5rem, 0.95rem + 2.3vw, 2.85rem);
-  font-weight: 500;
-  line-height: 1.14;
-  letter-spacing: -0.03em;
-  font-variation-settings: "opsz" 36;
-  margin: 0;
-  color: var(--ink-faint);
-}
-
-/* Words that have already scrolled past brighten to full ink.
-   `:not(em)` matters: the accent word carries the highlighter and must keep its
-   own colour. Without the exclusion this rule outranks `.thesis em` on
-   specificity and quietly paints over it. */
-.v2 .thesis .kinWord > * {
-  transition: transform 0.7s var(--ease-out), color 0.7s var(--ease-out);
-  transition-delay: var(--kin-delay, 0ms);
-}
-
-.v2 .thesis[data-in="true"] .kinWord > *:not(em) {
-  color: var(--ink-strong);
-}
-
-/* Same highlighter as the masthead, one size down. */
-.v2 .thesis em {
-  font-style: normal;
-  background: var(--accent-fill);
-  color: var(--on-accent);
-  line-height: 1;
-  padding: 0.04em 0.1em 0.09em;
-  margin-inline: -0.04em;
-}
-
 /* ============================================================================
-   WORK RAIL
-   Horizontal, drag-scrollable, snap-aligned. The dimension line above it is
-   the scrollbar.
+   WORK TILES
+   Two-up grid of large tinted cards. The serif title is the only serif on the
+   page. The image bleeds off the bottom of the tile rather than sitting inside
+   it, so the tile reads as a window onto the work.
    ========================================================================== */
 
-.v2 .railWrap {
-  position: relative;
+.v2 .tiles {
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.v2 .railDim {
-  max-width: var(--sheet);
-  margin: 0 auto clamp(1.5rem, 4vw, 2.5rem);
-  padding-inline: calc(var(--gutter) + var(--rail));
-}
-
-.v2 .scroller {
+/* The li is the grid item; the anchor is the tile. Both must fill the track or
+   uneven copy lengths give you tiles of different heights. */
+.v2 .tiles > li {
   display: flex;
-  gap: clamp(1rem, 2.5vw, 2rem);
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  /* The scroller is full-bleed so cards can run off both edges, but its first
-     card must start exactly where `.sheetInner` content starts. That means
-     re-deriving the centring offset by hand: half the slack, plus the gutter,
-     plus the margin rail. Percentages here resolve against the parent's width,
-     not the viewport, so this stays correct with a scrollbar present. */
-  padding-inline: calc(
-    max(0px, (100% - var(--sheet)) / 2) + var(--gutter) + var(--rail)
-  );
-  padding-block: 0.5rem 1.5rem;
-  cursor: grab;
 }
 
-.v2 .scroller::-webkit-scrollbar {
-  display: none;
-}
-
-.v2 .scroller[data-dragging="true"] {
-  cursor: grabbing;
-  scroll-snap-type: none;
-  user-select: none;
-}
-
-.v2 .card {
-  flex: 0 0 auto;
-  width: min(78vw, 30rem);
-  scroll-snap-align: center;
-  display: block;
-}
-
-/* Scroll-driven scale: cards swell as they cross the centre of the scroller.
-   Chrome, Edge and Safari 26 support this natively; elsewhere the cards are
-   simply all the same size, which is a perfectly good design. */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) and (min-width: 56rem) {
-    .v2 .card {
-      animation: v2-card linear both;
-      animation-timeline: view(inline);
-      animation-range: entry 5% exit 95%;
-    }
+@media (min-width: 56rem) {
+  .v2 .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* Enough of a dip to give the rail depth, not so much that an off-centre card
-   becomes unreadable — these are the only route into the case studies. */
-@keyframes v2-card {
-  0%,
-  100% {
-    scale: 0.955;
-    opacity: 0.72;
-  }
-  50% {
-    scale: 1;
-    opacity: 1;
-  }
-}
-
-.v2 .cardPlate {
+.v2 .tile {
   position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  border: 1px solid var(--rule);
-  background: var(--sunken);
-  transition: border-color 0.35s var(--ease);
+  border-radius: var(--r-tile);
+  background: var(--tile, var(--tint-peach));
+  padding: clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.5rem, 3.5vw, 2.5rem) 0;
+  min-height: clamp(22rem, 40vw, 30rem);
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
 }
 
-.v2 .card:hover .cardPlate,
-.v2 .card:focus-visible .cardPlate {
-  border-color: var(--accent-line);
+.v2 .tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1.5rem 3rem -1rem color-mix(in oklab, var(--ink) 22%, transparent);
 }
 
-/* The plate contents zoom inside the frame rather than the frame growing. */
-.v2 .cardPlate > * {
-  transition: scale 0.6s var(--ease-out);
+/* 72%, not 62%: on the lightest tint (butter) the label was 4.0:1. */
+.v2 .tileCat {
+  color: color-mix(in oklab, var(--ink) 72%, transparent);
 }
 
-.v2 .card:hover .cardPlate > * {
-  scale: 1.035;
+.v2 .tileTitle {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: var(--t-tile);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  margin: 0.7rem 0 0;
+  color: var(--ink);
 }
 
-.v2 .cardIndex {
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  z-index: 2;
-  padding: 0.25rem 0.5rem;
-  background: var(--ground);
-  border: 1px solid var(--rule-bold);
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.14em;
-  color: var(--ink-soft);
-}
-
-/* On hover the index chip is highlighted, the same gesture as the masthead —
-   the accent enters as a fill, never as a colour change on the type. */
-.v2 .card:hover .cardIndex {
-  background: var(--accent-fill);
-  border-color: var(--accent-line);
-  color: var(--on-accent);
-}
-
-.v2 .cardMeta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s4);
-  margin-top: var(--s4);
-}
-
-.v2 .cardTitle {
-  margin: 0.65rem 0 0;
-  font-size: var(--t-h3);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  font-variation-settings: "opsz" 20;
-  line-height: 1.15;
-}
-
-.v2 .cardDeck {
-  margin: 0.5rem 0 0;
+.v2 .tileDeck {
+  margin: 0.75rem 0 0;
   font-size: var(--t-sm);
-  color: var(--ink-soft);
-  line-height: 1.5;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--ink) 78%, transparent);
+  max-width: 34ch;
 }
 
-.v2 .cardStats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 1.25rem;
-  margin-top: var(--s4);
-  padding-top: var(--s3);
-  border-top: 1px solid var(--rule);
-}
-
-.v2 .cardStat {
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.1em;
-  color: var(--ink-soft);
-}
-
-.v2 .cardStat b {
-  color: var(--ink-strong);
-  font-weight: 500;
-}
-
-.v2 .cardGo {
+.v2 .tileGo {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  margin-top: var(--s4);
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent-text);
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
 }
 
-.v2 .cardGo i {
+.v2 .tileGo i {
   font-style: normal;
   transition: translate 0.25s var(--ease);
 }
 
-.v2 .card:hover .cardGo i {
+.v2 .tile:hover .tileGo i {
   translate: 5px 0;
 }
 
-.v2 .railHint {
-  max-width: var(--sheet);
-  margin-inline: auto;
-  padding-inline: calc(var(--gutter) + var(--rail));
+/* The image well. Negative inline margins pull it to the tile edges and it is
+   clipped by the tile's own overflow, so the screenshot runs off the bottom. */
+.v2 .tileArt {
+  margin: clamp(1.5rem, 3vw, 2.25rem) calc(-1 * clamp(1.5rem, 3.5vw, 2.5rem)) 0;
+  margin-inline-start: clamp(1rem, 3vw, 2.5rem);
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.v2 .tileArt .plate {
+  border-start-start-radius: var(--r-sm);
+  height: 100%;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.v2 .tile:hover .tileArt .plate {
+  transform: translateY(-6px);
 }
 
 /* ============================================================================
    PLATE — image placeholder
    ----------------------------------------------------------------------------
-   While `src` is null this draws a survey-marker frame that names the exact
-   file to save and where. It is meant to be legible enough to ship a draft
-   with, and obvious enough that you never ship a final with one.
+   While `src` is null this draws a labelled frame naming the exact file to save
+   and where. The fill is a translucent ink wash rather than a fixed grey, so it
+   adapts to whichever tile tint it lands on.
    ========================================================================== */
 
 .v2 .plate {
@@ -1099,82 +709,57 @@ html.js .v2 .kin .kinWord > * {
   width: 100%;
   display: grid;
   place-items: center;
-  /* Sunken, not raised: an empty slot should read as a hole cut in the sheet.
-     On white it would be invisible. */
-  background: var(--sunken);
-  color: var(--ink-faint);
   overflow: hidden;
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+  color: color-mix(in oklab, var(--ink) 55%, transparent);
 }
 
-/* In a narrow frame — the hero portrait, a mobile card — the full instruction
-   wraps into an unreadable stack. Drop to the format alone; the path is still
-   in content/v2.ts where you need it. */
-@container (max-width: 15rem) {
-  .v2 .plateNote,
-  .v2 .platePath {
-    display: none;
-  }
-}
-
-/* Crosshair. Two hairlines through the centre, plus a diagonal weave, so an
-   empty frame still reads as a deliberate mark rather than a broken image. */
 .v2 .plate--empty::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(
-      to bottom,
-      transparent calc(50% - 0.5px),
-      var(--rule-bold) calc(50% - 0.5px),
-      var(--rule-bold) calc(50% + 0.5px),
-      transparent calc(50% + 0.5px)
-    ),
-    linear-gradient(
-      to right,
-      transparent calc(50% - 0.5px),
-      var(--rule-bold) calc(50% - 0.5px),
-      var(--rule-bold) calc(50% + 0.5px),
-      transparent calc(50% + 0.5px)
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      transparent 0 11px,
-      color-mix(in oklab, var(--rule-bold) 75%, transparent) 11px 12px
-    );
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 12px,
+    color-mix(in oklab, var(--ink) 7%, transparent) 12px 13px
+  );
 }
 
 .v2 .plateBadge {
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 0.35rem;
+  gap: 0.3rem;
   justify-items: center;
   text-align: center;
-  padding: 0.7rem 1rem;
-  max-width: min(90%, 26rem);
-  background: var(--ground);
-  border: 1px dashed var(--rule-bold);
+  padding: 0.8rem 1.1rem;
+  max-width: min(90%, 24rem);
+  border-radius: var(--r-sm);
+  background: color-mix(in oklab, var(--paper) 82%, transparent);
+  backdrop-filter: blur(3px);
+  border: 1px dashed color-mix(in oklab, var(--ink) 28%, transparent);
 }
 
 .v2 .plateKey {
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.16em;
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent-text);
+  color: var(--accent-deep);
 }
 
 .v2 .plateNote {
-  font-size: 0.8125rem;
-  line-height: 1.4;
+  font-size: var(--t-xs);
+  line-height: 1.45;
   color: var(--ink-soft);
 }
 
 .v2 .platePath {
-  font-family: var(--mono);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
   font-size: 0.6875rem;
-  letter-spacing: 0.04em;
-  color: var(--ink-faint);
+  /* The badge is translucent over a tint, so the effective ground is darker
+     than paper — this needs a step more contrast than a caption on white. */
+  color: var(--ink-soft);
   word-break: break-all;
 }
 
@@ -1184,15 +769,20 @@ html.js .v2 .kin .kinWord > * {
   object-fit: cover;
 }
 
+@container (max-width: 15rem) {
+  .v2 .plateNote,
+  .v2 .platePath {
+    display: none;
+  }
+}
+
 /* ============================================================================
    IMPACT
    ========================================================================== */
 
 .v2 .impactGrid {
   display: grid;
-  gap: 1px;
-  background: var(--rule);
-  border-block: 1px solid var(--rule);
+  gap: clamp(1.25rem, 3vw, 2rem);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -1203,45 +793,38 @@ html.js .v2 .kin .kinWord > * {
 }
 
 .v2 .impactCell {
-  background: var(--ground);
-  padding: clamp(1.25rem, 3vw, 2rem);
   display: grid;
   align-content: start;
-  gap: 0.4rem;
-  transition: background 0.3s var(--ease);
-}
-
-.v2 .impactCell:hover {
-  background: var(--panel);
+  gap: 0.3rem;
+  padding-top: var(--s4);
+  border-top: 2px solid var(--accent);
 }
 
 .v2 .impactValue {
-  font-family: var(--display);
-  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
   font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.05em;
-  font-variation-settings: "opsz" 40;
-  color: var(--ink-strong);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 
 .v2 .impactValue i {
   font-style: normal;
-  color: var(--accent-text);
+  color: var(--accent);
 }
 
 .v2 .impactLabel {
   font-size: var(--t-sm);
-  color: var(--ink-strong);
-  margin-top: 0.35rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-top: 0.3rem;
 }
 
 .v2 .impactCaveat {
-  font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: var(--t-xs);
   line-height: 1.5;
-  letter-spacing: 0.02em;
   color: var(--ink-faint);
 }
 
@@ -1251,7 +834,7 @@ html.js .v2 .kin .kinWord > * {
 
 .v2 .practice {
   display: grid;
-  gap: clamp(2rem, 5vw, 3rem);
+  gap: clamp(1.25rem, 3vw, 1.75rem);
 }
 
 @media (min-width: 56rem) {
@@ -1262,25 +845,115 @@ html.js .v2 .kin .kinWord > * {
 
 .v2 .practiceItem {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.6rem;
   align-content: start;
-  padding-top: var(--s4);
-  border-top: 1px solid var(--rule);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: var(--r-tile);
+  background: var(--paper-tint);
+  border: 1px solid var(--rule);
 }
 
 .v2 .practiceTitle {
   font-size: var(--t-h3);
   font-weight: 600;
-  letter-spacing: -0.02em;
-  font-variation-settings: "opsz" 18;
   margin: 0;
 }
 
 .v2 .practiceBody {
-  color: var(--ink-soft);
   font-size: var(--t-sm);
   line-height: 1.6;
+  color: var(--ink-soft);
   margin: 0;
+}
+
+/* ============================================================================
+   TESTIMONIALS
+   ----------------------------------------------------------------------------
+   Three-up on desktop, stacked below. Cards stretch to equal height and the
+   attribution is pinned to the bottom with `margin-top: auto`, so quotes of
+   very different lengths still line up along both edges.
+
+   White on the tinted band rather than tinted themselves — see the note in
+   page.tsx. The only colour is the quote mark.
+   ========================================================================== */
+
+.v2 .quotes {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 62rem) {
+  .v2 .quotes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* The li only stretches; the figure inside is the card. */
+.v2 .quoteItem {
+  display: flex;
+}
+
+.v2 .quoteCard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: var(--r-tile);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+}
+
+.v2 .quoteMark {
+  font-family: var(--serif);
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: 0.6;
+  color: var(--accent);
+  user-select: none;
+}
+
+.v2 .quoteBody {
+  margin: 0.75rem 0 0;
+}
+
+.v2 .quoteBody p {
+  margin: 0 0 0.75rem;
+  font-size: var(--t-sm);
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.v2 .quoteBody p:last-child {
+  margin-bottom: 0;
+}
+
+/* Pushes the attribution to the card's bottom edge whatever the quote length.
+   The gap above it has to come from padding, not margin: `margin-block-start`
+   is the logical alias of `margin-top`, so setting both meant the second one
+   silently replaced `auto` and the attributions floated mid-card. */
+.v2 .quoteAttr {
+  display: block;
+  margin-top: auto;
+  padding-top: var(--s5);
+  border-top: 1px solid var(--rule);
+}
+
+.v2 .quoteName {
+  display: block;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.v2 .quoteRole {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: var(--t-xs);
+  color: var(--ink-faint);
 }
 
 /* ============================================================================
@@ -1288,43 +961,36 @@ html.js .v2 .kin .kinWord > * {
    ========================================================================== */
 
 .v2 .closer {
-  padding-block: clamp(3.5rem, 8vw, 6.5rem);
-  border-top: 1px solid var(--rule);
+  padding-block: clamp(3.5rem, 9vw, 7rem);
+  text-align: center;
 }
 
-/* Its own clamp rather than --t-giant: the closer should be the second-largest
-   thing on the page, never a rematch with the masthead. */
 .v2 .closerTitle {
-  font-size: clamp(1.9rem, 1.05rem + 3.2vw, 3.75rem);
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 1.05rem + 2.1vw, 2.6rem);
   font-weight: 700;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
-  font-variation-settings: "opsz" 48;
-  max-width: 20ch;
-  margin: 0 0 clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  max-width: 24ch;
+  margin: 0 auto clamp(1rem, 3vw, 1.5rem);
+}
+
+.v2 .closerNote {
+  max-width: 32rem;
+  margin: 0 auto clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--ink-soft);
+  font-size: var(--t-lead);
 }
 
 .v2 .closerMail {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  font-family: var(--display);
-  font-size: clamp(1.25rem, 3.5vw, 2.25rem);
+  gap: 0.6rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
   font-weight: 600;
-  letter-spacing: -0.03em;
-  /* Ink type over a volt rule — the address has to be readable and copyable,
-     so the accent sits under it rather than in it. It thickens into a full
-     highlight on hover. */
-  color: var(--ink-strong);
-  padding: 0.05em 0.1em 0.18rem;
-  margin-inline-start: -0.1em;
-  box-shadow: inset 0 -0.16em 0 var(--accent-fill);
-  transition: box-shadow 0.28s var(--ease);
+  color: var(--accent);
   word-break: break-word;
-}
-
-.v2 .closerMail:hover {
-  box-shadow: inset 0 -1.05em 0 var(--accent-fill);
+  transition: color 0.2s var(--ease);
 }
 
 .v2 .closerMail i {
@@ -1332,8 +998,12 @@ html.js .v2 .kin .kinWord > * {
   transition: translate 0.25s var(--ease);
 }
 
+.v2 .closerMail:hover {
+  color: var(--accent-deep);
+}
+
 .v2 .closerMail:hover i {
-  translate: 6px 0;
+  translate: 5px 0;
 }
 
 .v2 .footer {
@@ -1359,7 +1029,7 @@ html.js .v2 .kin .kinWord > * {
 }
 
 .v2 .footerLinks a:hover {
-  color: var(--accent-text);
+  color: var(--accent);
 }
 
 /* ============================================================================
@@ -1367,24 +1037,24 @@ html.js .v2 .kin .kinWord > * {
    ========================================================================== */
 
 .v2 .studyHead {
-  padding-block: clamp(2.5rem, 7vw, 5rem) clamp(2rem, 5vw, 3rem);
+  padding-block: clamp(2rem, 5vw, 3.5rem) clamp(1.75rem, 4vw, 2.5rem);
 }
 
 .v2 .studyBack {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: clamp(1.75rem, 5vw, 3rem);
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.16em;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-soft);
   transition: color 0.2s var(--ease);
 }
 
 .v2 .studyBack:hover {
-  color: var(--accent-text);
+  color: var(--accent);
 }
 
 .v2 .studyBack i {
@@ -1397,31 +1067,32 @@ html.js .v2 .kin .kinWord > * {
 }
 
 .v2 .studyTitle {
+  font-family: var(--serif);
   font-size: var(--t-h1);
   font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  font-variation-settings: "opsz" 64;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
   margin: 0;
-  max-width: 18ch;
+  max-width: 20ch;
 }
 
 .v2 .studyDeck {
-  margin: clamp(1.25rem, 3vw, 1.75rem) 0 0;
+  margin: clamp(1rem, 3vw, 1.5rem) 0 0;
   max-width: 40rem;
   font-size: var(--t-lead);
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--ink-soft);
 }
 
-/* Spec table — role, team, duration, platform. A drawing's title block. */
 .v2 .specs {
   display: grid;
-  gap: 1px;
-  background: var(--rule);
-  border-block: 1px solid var(--rule);
+  gap: clamp(1rem, 2.5vw, 1.5rem);
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: clamp(2rem, 5vw, 3rem);
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: var(--r-tile);
+  background: var(--paper-tint);
+  border: 1px solid var(--rule);
 }
 
 @media (min-width: 48rem) {
@@ -1431,27 +1102,23 @@ html.js .v2 .kin .kinWord > * {
 }
 
 .v2 .specCell {
-  background: var(--ground);
-  padding: var(--s4) var(--s4) var(--s5);
   display: grid;
-  gap: 0.5rem;
+  gap: 0.4rem;
   align-content: start;
 }
 
 .v2 .specValue {
   font-size: var(--t-sm);
-  color: var(--ink-strong);
+  color: var(--ink);
   line-height: 1.45;
 }
 
-/* --- Brief: the 30-second read ------------------------------------------- */
-
 .v2 .brief {
   display: grid;
-  gap: clamp(1.5rem, 4vw, 2.5rem);
+  gap: clamp(1.5rem, 3.5vw, 2.25rem);
   padding: clamp(1.5rem, 4vw, 2.5rem);
-  border: 1px solid var(--rule);
-  background: var(--panel);
+  border-radius: var(--r-tile);
+  background: var(--accent-wash);
 }
 
 @media (min-width: 60rem) {
@@ -1462,7 +1129,7 @@ html.js .v2 .kin .kinWord > * {
 
 .v2 .briefItem {
   display: grid;
-  gap: 0.6rem;
+  gap: 0.5rem;
   align-content: start;
 }
 
@@ -1470,19 +1137,17 @@ html.js .v2 .kin .kinWord > * {
   margin: 0;
   font-size: var(--t-sm);
   line-height: 1.6;
-  color: var(--ink-strong);
+  color: var(--ink);
 }
 
-/* --- Body sections -------------------------------------------------------- */
-
 .v2 .studySection {
-  padding-block: clamp(2.5rem, 7vw, 5rem);
+  padding-block: clamp(2rem, 5vw, 3.5rem);
   border-top: 1px solid var(--rule);
 }
 
 .v2 .studyGrid {
   display: grid;
-  gap: clamp(1rem, 4vw, 3rem);
+  gap: clamp(0.75rem, 3vw, 2.5rem);
 }
 
 @media (min-width: 60rem) {
@@ -1496,12 +1161,13 @@ html.js .v2 .kin .kinWord > * {
 }
 
 .v2 .studyHeading {
+  font-family: var(--serif);
   font-size: var(--t-h2);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  font-variation-settings: "opsz" 32;
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.015em;
   margin: 0 0 var(--s4);
-  max-width: 22ch;
+  max-width: 24ch;
 }
 
 .v2 .studyBody p {
@@ -1511,65 +1177,60 @@ html.js .v2 .kin .kinWord > * {
 }
 
 .v2 .studyBody p:first-of-type {
-  color: var(--ink-strong);
+  color: var(--ink);
 }
 
-/* Figures break out of the reading column deliberately. */
 .v2 .figure {
-  margin: clamp(2rem, 5vw, 3rem) 0 0;
+  margin: clamp(1.5rem, 4vw, 2.5rem) 0 0;
   grid-column: 1 / -1;
+}
+
+.v2 .figure .plate {
+  border-radius: var(--r-tile);
 }
 
 .v2 .figureCaption {
   margin-top: 0.75rem;
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.08em;
+  font-size: var(--t-xs);
   color: var(--ink-faint);
 }
 
-/* --- The honest note. The only place rust appears. ----------------------- */
-
+/* The honest note. Bronze — the one warm colour in a peacock feather, and the
+   only warm thing on the site. Keeping the warning outside the cool accent
+   family is deliberate: a caution sharing a hue with links stops reading as a
+   caution. */
 .v2 .honest {
   margin-top: var(--s5);
   padding: var(--s5);
-  border: 1px solid color-mix(in oklab, var(--rust) 32%, transparent);
-  background: var(--rust-wash);
+  border-radius: var(--r-tile);
+  background: #fbf5e9;
+  border: 1px solid #e6d5ae;
   max-width: var(--measure);
 }
 
 .v2 .honestLabel {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  color: var(--rust);
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.16em;
+  gap: 0.45rem;
+  margin-bottom: 0.6rem;
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-
-.v2 .honestLabel::before {
-  content: "";
-  width: 0;
-  height: 0;
-  border-inline: 4.5px solid transparent;
-  border-bottom: 8px solid currentColor;
+  color: #7d5a11;
 }
 
 .v2 .honest p {
   margin: 0;
-  color: var(--ink-strong);
+  color: var(--ink);
   font-size: var(--t-sm);
   line-height: 1.65;
 }
 
-/* --- Metrics strip -------------------------------------------------------- */
-
 .v2 .metrics {
   display: grid;
   gap: clamp(1.25rem, 3vw, 2rem);
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
 }
 
 @media (min-width: 48rem) {
@@ -1580,28 +1241,25 @@ html.js .v2 .kin .kinWord > * {
 
 .v2 .metric {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.3rem;
   align-content: start;
   padding-top: var(--s3);
-  border-top: 2px solid var(--accent-line);
+  border-top: 2px solid var(--accent);
 }
 
 .v2 .metricValue {
-  font-family: var(--display);
-  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3.4vw, 2.1rem);
   font-weight: 700;
-  letter-spacing: -0.04em;
-  font-variation-settings: "opsz" 32;
   line-height: 1;
+  letter-spacing: -0.025em;
   font-variant-numeric: tabular-nums;
 }
 
-/* --- Prev / next ---------------------------------------------------------- */
-
 .v2 .pager {
   display: grid;
-  gap: 1px;
-  background: var(--rule);
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  padding-block: clamp(2rem, 5vw, 3.5rem);
   border-top: 1px solid var(--rule);
 }
 
@@ -1612,15 +1270,18 @@ html.js .v2 .kin .kinWord > * {
 }
 
 .v2 .pagerLink {
-  background: var(--ground);
-  padding: clamp(1.5rem, 4vw, 2.5rem);
   display: grid;
   gap: 0.5rem;
-  transition: background 0.3s var(--ease);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: var(--r-tile);
+  background: var(--paper-tint);
+  border: 1px solid var(--rule);
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
 }
 
 .v2 .pagerLink:hover {
-  background: var(--panel);
+  transform: translateY(-3px);
+  border-color: var(--accent);
 }
 
 .v2 .pagerLink--next {
@@ -1629,41 +1290,36 @@ html.js .v2 .kin .kinWord > * {
 }
 
 .v2 .pagerTitle {
-  font-family: var(--display);
+  font-family: var(--serif);
   font-size: var(--t-h3);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  font-variation-settings: "opsz" 20;
+  font-weight: 700;
   line-height: 1.2;
 }
 
 .v2 .pagerLink:hover .pagerTitle {
-  color: var(--accent-text);
+  color: var(--accent);
 }
-
-/* --- Tags ----------------------------------------------------------------- */
 
 .v2 .tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   list-style: none;
-  margin: clamp(1.5rem, 4vw, 2rem) 0 0;
+  margin: clamp(1.25rem, 3vw, 1.75rem) 0 0;
   padding: 0;
 }
 
 .v2 .tag {
-  padding: 0.3rem 0.6rem;
-  border: 1px solid var(--rule-bold);
-  border-radius: 999px;
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px
+  ;
+  background: var(--accent-wash);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--accent-deep);
 }
 
-/* --- Skip link, scoped ----------------------------------------------------- */
+/* --- Skip link ------------------------------------------------------------- */
 
 .v2 .skipV2 {
   position: absolute;
@@ -1671,15 +1327,276 @@ html.js .v2 .kin .kinWord > * {
   top: 1rem;
   z-index: 100;
   transform: translateY(-250%);
-  background: var(--accent-fill);
-  color: var(--on-accent);
-  padding: 0.5rem 1rem;
-  font-family: var(--mono);
-  font-size: var(--t-mono);
-  letter-spacing: 0.14em;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.55rem 1.1rem;
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .v2 .skipV2:focus {
   transform: none;
+}
+
+/* The org / year / index row above a case study title. */
+.v2 .studyMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.1rem;
+  margin-bottom: clamp(0.875rem, 2vw, 1.25rem);
+}
+
+/* ============================================================================
+   PULL QUOTE
+   ----------------------------------------------------------------------------
+   One sentence, full width, in the accent wash. Set in the serif because this
+   is the only claim on the page that is about the person rather than the work —
+   it borrows the voice reserved for project titles to mark that shift.
+   ========================================================================== */
+
+.v2 .pull {
+  background: var(--accent-wash);
+  border-block: 1px solid color-mix(in oklab, var(--accent) 18%, transparent);
+}
+
+.v2 .pullInner {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+@media (min-width: 56rem) {
+  .v2 .pullInner {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+/* An oversized serif quote mark, used as a structural marker rather than
+   punctuation — the sentence keeps its own quotes off. */
+.v2 .pullMark {
+  font-family: var(--serif);
+  font-size: 3.25rem;
+  font-weight: 700;
+  line-height: 0.7;
+  color: var(--accent);
+  user-select: none;
+}
+
+.v2 .pullText {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 0.95rem + 1.05vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.32;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  margin: 0;
+  max-width: 44rem;
+}
+
+.v2 .pullAttr {
+  margin-top: 1rem;
+}
+
+/* ============================================================================
+   ABOUT PAGE
+   ========================================================================== */
+
+.v2 .aboutHead {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2rem, 5vw, 3.5rem);
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+@media (min-width: 60rem) {
+  .v2 .aboutHead {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  }
+}
+
+.v2 .aboutTitle {
+  font-family: var(--serif);
+  font-size: var(--t-h1);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0.6rem 0 0;
+  max-width: 22ch;
+}
+
+.v2 .aboutIntro {
+  margin-top: clamp(1.25rem, 3vw, 1.75rem);
+  max-width: var(--measure);
+}
+
+.v2 .aboutIntro p {
+  margin: 0 0 var(--s4);
+  font-size: var(--t-lead);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.v2 .aboutIntro p:first-child {
+  color: var(--ink);
+}
+
+/* Same offset-frame device as the home hero, mirrored so the two pages don't
+   look like the same layout twice. */
+.v2 .aboutArt {
+  position: relative;
+  width: 100%;
+  max-width: 22rem;
+  margin-inline: auto;
+  isolation: isolate;
+}
+
+.v2 .aboutArt::before {
+  content: "";
+  position: absolute;
+  inset: -0.9rem -0.9rem 1.6rem 1.6rem;
+  border-radius: var(--r-tile);
+  background: var(--tint-blue);
+  z-index: -2;
+}
+
+.v2 .aboutArt .plate {
+  border-radius: var(--r-tile);
+  background: #ebe8e4;
+}
+
+/* --- Prose block ----------------------------------------------------------- */
+
+.v2 .aboutProse {
+  max-width: var(--measure);
+}
+
+.v2 .aboutProse p {
+  margin: 0 0 var(--s4);
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.v2 .aboutProse p:first-of-type {
+  color: var(--ink);
+}
+
+/* --- Timeline -------------------------------------------------------------- */
+
+.v2 .timeline {
+  display: grid;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.v2 .timeItem {
+  display: grid;
+  gap: 0.35rem 1.5rem;
+  padding-block: clamp(1.1rem, 2.5vw, 1.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+.v2 .timeItem:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 48rem) {
+  .v2 .timeItem {
+    grid-template-columns: 9rem minmax(0, 1fr);
+  }
+}
+
+.v2 .timeOrg {
+  font-size: var(--t-h3);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.v2 .timeRole {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: var(--t-sm);
+  color: var(--accent-deep);
+  font-weight: 600;
+}
+
+.v2 .timeNote {
+  margin: 0.5rem 0 0;
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 44ch;
+}
+
+/* --- Off duty -------------------------------------------------------------- */
+
+.v2 .offDuty {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+}
+
+@media (min-width: 56rem) {
+  .v2 .offDuty {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.v2 .offDuty .plate {
+  border-radius: var(--r-tile);
+}
+
+/* --- Speaking -------------------------------------------------------------- */
+
+.v2 .speaking {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 48rem) {
+  .v2 .speaking {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.v2 .speakItem {
+  padding: clamp(1.1rem, 2.5vw, 1.5rem);
+  border-radius: var(--r-tile);
+  background: var(--paper-tint);
+  border: 1px solid var(--rule);
+}
+
+.v2 .speakTitle {
+  font-size: var(--t-h3);
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+
+.v2 .speakNote {
+  margin: 0;
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* The quote's follow-through link. Accent rather than the faint label grey:
+   on the pink wash the grey measured 4.33:1, and it's a link, so it should
+   look like one. */
+.v2 .pullAttr a {
+  color: var(--accent-deep);
+}
+
+.v2 .pullAttr a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
 }

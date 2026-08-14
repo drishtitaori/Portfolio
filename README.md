@@ -222,64 +222,119 @@ them match — `site.years` in `content/site.ts`. Interviewers do notice.
 
 ---
 
-# v2 — "Sheet" (draft, at `/v2`)
+# v2 — "Studio" (draft, at `/v2`)
 
 A second, parallel design running inside the same app. Nothing above this line
 changed except three small hooks; v1 is untouched and still the site.
 
 ```
 http://localhost:3000/v2/                     home
+http://localhost:3000/v2/about/               about me
 http://localhost:3000/v2/work/agent-autonomy/ a case study
 ```
 
 ## What it is
 
-Editorial on paper: a cool off-white ground (`#F1F1EC`, paper stock rather than
-cream), near-black line work, and oversized display type that animates on load
-and on scroll.
+Friendly, professional, cool-toned. White page, cool near-black ink (`#1F2628`),
+a peacock palette, and a two-up grid of pastel tinted tiles that carry the work.
 
-The structural device is a **CAD dimension line** — extension ticks, outward
-arrowheads, a notched label. You design for AutoCAD, Revit and Fusion, so the
-annotation layer from those tools is the site's furniture rather than a generic
-rule. It has two jobs: it measures the masthead, and above the work rail *the
-same component is the scrollbar*, inking in as you drag.
+Direction taken from `pratibhajoshi.com` — the structural moves, not the
+execution. Her site licenses **Calibre** from Klim, which we can't use, and it's
+on the same "top 20 UX portfolios" lists your hiring managers read, so a literal
+copy would be recognised. What's borrowed: pastel project tiles, a serif/sans
+split, the offset-framed portrait, a single magenta accent. What isn't: her hex
+values, her logo, her copy.
 
-| Role     | Face                 | Why                                                        |
-| -------- | -------------------- | ---------------------------------------------------------- |
-| Display  | Bricolage Grotesque  | Variable `opsz`, so the masthead and a card title are different cuts, not one cut scaled |
-| Body     | Instrument Sans      | Quiet, slightly narrow, gets out of the way                  |
-| Utility  | Martian Mono         | The annotation voice — reads as an instrument readout        |
+| Role   | Face                | Where                                          |
+| ------ | ------------------- | ---------------------------------------------- |
+| Sans   | Plus Jakarta Sans   | Everything you read. Closest free stand-in for Calibre |
+| Serif  | Playfair Display 700 | Project titles, impact figures, the closing line — nowhere else |
 
-### The accent has three roles — do not mix them
+Restricting the serif to where the work is makes it read as a byline rather than
+decoration. That pairing is what keeps a white page from looking templated.
 
-Volt (`#E4FF4F`) is unreadable as type on paper, about 1.3:1. So it became the
-**highlighter**, which is honest to a page built out of annotation marks: it
-strikes the masthead's third line, the accent word in the thesis, the email
-address on hover, and the card index chip on hover. Nowhere else.
+Display type is deliberately restrained — the hero caps at ~52px, matching the
+reference. The warmth comes from colour and roundness (`--r-tile: 1.5rem`), not
+scale.
 
-| Token            | Value     | Use                                          |
-| ---------------- | --------- | -------------------------------------------- |
-| `--accent-fill`  | `#E4FF4F` | Backgrounds and highlights **only**           |
-| `--accent-text`  | `#4A5600` | Accent as type — 6.9:1 on paper               |
-| `--accent-line`  | `#16161A` | Accent as a rule, border or focus ring        |
-| `--on-accent`    | `#14180A` | Type sitting on the fill                      |
+### Colour
 
-Never set `--accent-fill` as a `color`. On paper, emphasis comes from weight and
-darkness; the lime is there to mark, not to speak.
+A peacock has three hues — teal-blue, emerald, indigo-violet. Teal is the one
+that carries type: at 5.5:1 on white it clears AA, where the green is too light
+to read and the indigo is too easily mistaken for plain navy.
 
-Rust (`#A8360F`) appears in exactly one place: the "what went wrong" block on
-each case study.
+| Token              | Value     | Use                                     |
+| ------------------ | --------- | --------------------------------------- |
+| `--ink`            | `#1F2628` | Cool near-black, never pure             |
+| `--ink-soft`       | `#556063` | Body copy on white — 6.3:1              |
+| `--ink-faint`      | `#6A7477` | Captions and labels — 4.8:1, the floor  |
+| `--accent`         | `#0F7480` | Peacock teal. Passes AA as *type*       |
+| `--accent-deep`    | `#0A5A63` | Hover, and small type needing weight    |
+| `--peacock-green`  | `#12876A` | Gradient only — eye mark, hero frame    |
+| `--peacock-indigo` | `#3B3A8C` | Gradient only — eye mark, hero frame    |
 
-All text on the home page and the case studies clears WCAG AA. `--ink-faint`
-(`#67675F`, 4.8:1) is the floor for caveats and captions; `--hairline`
-(`#A3A39A`) is a *drawing* colour for the dimension geometry and is never used
-for type.
+The green and indigo are **never flat fills**. They appear only in the two
+gradients, which is what keeps a three-hue palette from turning into a rainbow.
 
-## The content is a draft
+The one warm colour on the site is the "what went wrong" block, in bronze
+(`#7D5A11` on `#FBF5E9`) — bronze being the fourth colour in a peacock feather.
+A caution that shares a hue with links stops reading as a caution.
+
+Six `--tint-*` pastels are assigned per project via `tint` in `content/v2.ts`.
+Tile interiors derive every colour from `--ink` with `color-mix`, so changing a
+project's tint re-tunes the whole card with no second rule set.
+
+All text on the home page and the case studies clears WCAG AA, verified
+programmatically against composited backgrounds including the gradient logo.
+
+### The eye mark
+
+`components/v2/EyeMark.tsx`. *Drishti* is Sanskrit for sight, so the logo isn't
+a glyph beside the name — it **is** the name, and it doubles as the claim the
+portfolio makes: someone who watches closely.
+
+It blinks. Everything inside the almond is clipped to it; a lid rectangle sits on
+top scaled to zero height from its upper edge, and the animation drops it to full
+height and lifts it again. That's a real eyelid rather than the whole mark
+squashing vertically, which is what `scaleY` on the group gives you and it reads
+as a wink. Two fast frames near the end of a 6s cycle — roughly human blink rate,
+slow enough not to read as a tic. Hover or focus blinks it once and dilates the
+pupil. `prefers-reduced-motion` stops it entirely.
+
+Pure CSS on a `transform`, so it never touches layout. The `id` prop exists
+because `clipPath` ids must be document-unique — render two with the same id and
+the second clips against the first.
+
+### The hero frame
+
+The portrait sits between two offset planes: an indigo→teal→green gradient block
+behind it and a pale indigo block in front of nothing. One of only two gradients
+on the site.
+
+It is **not** desaturated, unlike the reference. Theirs is a studio portrait
+where colour adds nothing, so mono reads as a choice. This one is a river, a blue
+sky and gold hills — the colour is most of the picture, and the water happens to
+sit almost exactly on the peacock teal the palette is built from.
+
+Project images are deliberately *not* contained: `.tileArt` uses negative inline
+margins and the tile clips them, so each screenshot runs off the bottom-right
+edge. That's what makes a tile read as a window onto the work rather than a card
+with a picture in it.
+
+## The content is a draft — with one exception
 
 Everything in `content/v2.ts` is written to be replaced. It is plausible, not
 true — the shape, length and rhythm are right, the facts are not verified.
 **Do not send this to anyone before rewriting it.**
+
+**`profile.testimonials` is real.** Three quotes from Hope Miller Goodell, Waves
+Mowatt-Kane and Sachendra Yadav, supplied by Drishti. They are the only verified
+words in the file, so don't let a rewrite pass sweep them away with the rest.
+
+They run verbatim with two exceptions, both obvious typos in the source that
+would read as carelessness on your own site: Waves wrote "Dhrishti" and "Ai",
+corrected to "Drishti" and "AI". Revert if you'd rather run them exactly as
+written.
 
 ## Filling the image placeholders
 
@@ -290,7 +345,15 @@ it wants. To fill one:
 2. Set `src: "/v2/<slot>.jpg"` on that slot in `content/v2.ts`
 
 The frame already reserves the right aspect ratio, so filling a slot causes no
-reflow. Slots waiting: `portrait`, four `*-cover`, and eight in-body figures.
+reflow. **Filled:** `portrait` (home hero). Source was a 3024x4032 phone shot, cropped
+to 2400x3200 to bring the figure up in frame — uncropped she was small enough in
+a wide scenic shot to be unreadable at 336px — then resampled to 1100px wide,
+497KB. No EXIF or GPS in the original; checked before committing.
+
+**Still waiting:** `about-portrait`, `about-offduty`, four `*-cover`, and eight
+in-body figures — 14 in total.
+
+`about-portrait` is the informal one: working, sketching, at a whiteboard.
 
 ## How it coexists with v1
 
@@ -305,13 +368,23 @@ Three hooks, all reversible:
 - `app/v2/layout.tsx` — loads its own three fonts and sets `robots: noindex`.
   v2 is also absent from `sitemap.ts`.
 
+## The pull quote
+
+`profile.pullQuote` in `content/v2.ts` is set as a full-width serif pull quote
+between the work grid and the numbers, on the home page rather than on About.
+That placement is deliberate: it is the sentence that separates you from other
+designers applying to AI teams, so it shouldn't need a click to find. The long
+form of the same argument is the "Point of view" section on `/about`.
+
+To move it, delete the `<section className="pull">` block in `app/v2/page.tsx`
+and render `profile.pullQuote` on the About page instead.
+
 ## Known gaps
 
-- The hero portrait is hidden below 56rem. Mobile hero is type-only by choice.
-- Light only. The tokens are role-named, so a dark counterpart is a second
-  token block plus a toggle — but there is no theme switch today.
-- Card scale-on-scroll uses CSS scroll-driven animation. Chrome, Edge and
-  Safari 26 have it; Firefox doesn't, and there the cards are all one size.
+- Light only, no theme toggle.
+- The previous "Sheet" direction (dark, then light, CAD dimension lines, drag
+  rail) is committed at `ae1f784` if you want it back:
+  `git checkout ae1f784 -- app/v2 components/v2 content/v2.ts`
 - Interactions built: scroll-choreographed reveals, kinetic word type, the
   drag rail, count-up metrics, marquee. Not built: custom cursor, hero widget.
 

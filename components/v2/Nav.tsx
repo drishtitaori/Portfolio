@@ -4,10 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { profile } from "@/content/v2";
+import EyeMark from "./EyeMark";
 
 const LINKS = [
-  { href: "/v2/", label: "Work" },
-  { href: "/v2/#practice", label: "Practice" },
+  { href: "/v2/#work", label: "Work" },
+  { href: "/v2/about/", label: "About" },
   { href: "/v2/#contact", label: "Contact" },
 ];
 
@@ -31,13 +32,17 @@ export default function Nav() {
     <div className="sheetInner">
       <nav className="nav" data-lifted={lifted} aria-label="Primary">
         <Link href="/v2/" className="navMark">
-          <span className="navDot" aria-hidden="true" />
+          <EyeMark id="nav-eye" />
           {profile.name}
         </Link>
 
         <ul className="navLinks">
           {LINKS.map((l) => {
-            const current = l.href === "/v2/" && path === "/v2";
+            // Only the real routes can be "current"; the two in-page anchors
+            // are not pages, so marking them would be a lie to a screen reader.
+            const current =
+              (l.href === "/v2/about/" && path.startsWith("/v2/about")) ||
+              (l.href === "/v2/#work" && path === "/v2");
             return (
               <li key={l.href}>
                 <Link

@@ -51,6 +51,14 @@ export type Study = {
   title: [string, string];
   /** One line on the index card. States the problem, not the solution. */
   deck: string;
+  /** Short kind-of-work label above the tile title. Two words at most. */
+  category: string;
+  /**
+   * Which pastel tile this project gets on the index. One of the `--tint-*`
+   * tokens in app/v2/v2.css. Give adjacent tiles different hues — the grid is
+   * two-up, so 1 and 2 sit side by side.
+   */
+  tint: string;
   org: string;
   year: string;
   role: string;
@@ -73,19 +81,76 @@ export const profile = {
   years: 6,
   status: "Open to Senior & Staff roles",
 
-  /** The masthead. Three lines, big words — this is set as display type. */
-  masthead: ["Making the", "ambiguous", "decidable."],
+  /**
+   * The hero. Reads as an introduction rather than a slogan — first person,
+   * one sentence of who, one of what you care about.
+   *
+   * Wrap a word in asterisks to set it in the magenta accent. Keep it to two
+   * or three words across the whole headline; the accent is a pointer, not a
+   * highlighter.
+   */
+  heroTitle:
+    "I'm Drishti, a Senior Product Designer at *Autodesk.* I work where nobody has decided what's right yet.",
 
-  /** Sits under the masthead at reading size. */
-  standfirst:
-    "Senior product designer. Six years turning unframed problems — AI agent autonomy, enterprise billing, commercial banking — into something a room full of people can actually argue about and ship.",
+  /** Sits under the hero at reading size. Bold spans render in magenta. */
+  heroSub:
+    "Six years on ambiguous, high-consequence problems — AI agent autonomy, enterprise billing, commercial banking. Previously at **American Express** and **Accenture**.",
 
   /**
    * Scroll-revealed word by word, one long sentence. Keep it one sentence.
-   * Wrap a word in asterisks to set it in volt — one word, not a phrase.
+   * Wrap a word in asterisks to set it in the accent.
    */
   thesis:
     "I work at the point where a problem is still a paragraph of disagreement rather than a brief, and my job there is to make it *decidable* — find the real constraint, put a shape on the tradeoff, and hand the room something concrete enough to be wrong about.",
+
+  /**
+   * The positioning claim, set as a full-width pull quote between the work and
+   * the numbers. It sits on the home page rather than the About page on
+   * purpose: it is the sentence that separates you from other designers
+   * applying to AI teams, and it should not need a second click to find.
+   *
+   * Move it to the About page by deleting the <section className="pull"> block
+   * in app/v2/page.tsx and rendering `profile.pullQuote` there instead.
+   */
+  pullQuote:
+    "Designing for agentic behavior depends on real intuition for how these systems actually behave, and daily hands-on use is how I have built that intuition.",
+
+  /**
+   * Testimonials. These are REAL — the only verified content in this file.
+   * Everything else here is draft copy; do not let a rewrite pass sweep these
+   * away with it.
+   *
+   * Quoted verbatim with two exceptions, both obvious typos in the source that
+   * would read as carelessness on your own site: Waves wrote "Dhrishti" and
+   * "Ai". Corrected to "Drishti" and "AI". Revert if you would rather run them
+   * exactly as written.
+   *
+   * `quote` is an array so a testimonial can carry paragraph breaks.
+   */
+  testimonials: [
+    {
+      quote: [
+        "Drishti was a pleasure to have on our team! The curiosity, thoughtful problem-solving, and collaborative spirit she brought to her work was an asset to our UX group. Drishti contributed to one of the top priority initiatives for the company — her work has had real impact. Her willingness to explore, iterate, and seek feedback while bringing new ideas forward enhanced our team's work. Drishti also contributed a great deal to our team's culture, sharing book suggestions and links to articles as well as photos of her travels. Again, it was lovely working with Drishti and a joy to have her on our team.",
+      ],
+      name: "Hope Miller Goodell",
+      role: "Product Designer + UX Leader",
+    },
+    {
+      quote: [
+        "Drishti is both creative and imaginative. While on our team she inspired her fellow team members to explore new avenues for digital interactions. Within her role she examined both the employee and customer experiences. Her data and ideations in AI provided a better understanding of the evolving customer. Using human-centered design and customer research, she developed a new customer persona. Her forward-thinking capabilities and great attention to detail allowed our team to further understand wearables. Through her work we were able to continue to keep pulse with the needs of our customers. Her contribution to the team was very much appreciated.",
+      ],
+      name: "Waves Mowatt-Kane",
+      role: "CX Transformation Executive",
+    },
+    {
+      quote: [
+        "Drishti is an asset to any design team. I have been consistently impressed with her attitude and productivity during the time that I have worked with her. She is both bright and quite motivated.",
+        "She has been quite effective in understanding the problem statement and is able to digest large volumes of information. She has constantly produced designs that capture the essence of the product and enhance the overall User Experience.",
+      ],
+      name: "Sachendra Yadav",
+      role: "UX Leader and Design Professor",
+    },
+  ],
 
   clients: [
     "Autodesk",
@@ -96,12 +161,21 @@ export const profile = {
     "Comcast",
   ],
 
+  /**
+   * The hero portrait — the one image above the fold. It sits inside the offset
+   * gradient frame and is rendered black-and-white, warming to colour on hover.
+   * A three-quarter or waist-up shot with some background works better here
+   * than a tight headshot; the frame needs something to hold.
+   */
   portrait: {
     slot: "portrait",
-    ratio: "4 / 5",
-    note: "Portrait. Shoulders-up, plain background, looking at camera.",
-    alt: "Drishti Taori",
-    src: null,
+    // 3:4 source in a 3:4 frame, so nothing is cropped. The original was a
+    // 3024x4032 phone shot; public/v2/portrait.jpg is resampled to 1100px wide
+    // (440KB, down from 1.5MB) which is still 2x for the 21rem slot.
+    ratio: "3 / 4",
+    note: "Filled.",
+    alt: "Drishti Taori standing beside a river, dry golden hills behind her",
+    src: "/v2/portrait.jpg",
   } satisfies Slot,
 
   impact: [
@@ -155,11 +229,101 @@ export const profile = {
   },
 };
 
+/**
+ * The About page.
+ *
+ * DRAFT, like the rest of this file — the roles and dates are reconstructed
+ * from your résumé and the shape of the page, not verified. The timeline in
+ * particular needs your eye: titles and year ranges are the two things an
+ * interviewer will check against LinkedIn first.
+ */
+export const about = {
+  kicker: "About me",
+  title: "I like the part of the job that isn't decided yet.",
+
+  intro: [
+    "I'm a senior product designer in Seattle, six years into a career spent mostly on surfaces where the requirements arrived incomplete — enterprise tooling, financial workflows, and for the last three years, AI systems that act on a customer's behalf.",
+    "What I actually do is make disagreement decidable. When a problem is still a paragraph that four people read four different ways, my job is to find the real constraint, put a shape on the tradeoff, and hand the room something concrete enough to argue with. The screens come after that, and they're the easy part.",
+    "I work best embedded with engineers, close enough to the build that I find out quickly when a design is wrong. Most of my strongest work started as a prototype nobody asked for.",
+  ],
+
+  portrait: {
+    slot: "about-portrait",
+    ratio: "4 / 5",
+    note: "A second, less formal portrait. Working, sketching, or at a whiteboard.",
+    alt: "Drishti Taori at work",
+    src: null,
+  } satisfies Slot,
+
+  /** The section the pull quote is really about, expanded. */
+  ai: {
+    title: "On designing for agents",
+    body: [
+      "Agentic systems break the assumption most design craft rests on: that the interface does what the interface says. An agent's behaviour is probabilistic, its failures are unlike software failures, and the interesting decisions are about permission rather than layout — how much can it do unasked, and what does it owe you when it gets that wrong.",
+      "You cannot reason about that from a spec. I use these systems every day, deliberately, including for the parts of my own work they're bad at, because the failure modes are the design material. Knowing how a model hedges, where it confidently invents, and what it feels like to be three steps into an action you did not authorise — that is what tells you where a confirmation belongs.",
+    ],
+  },
+
+  /** Reverse-chronological. Keep it short; this is not a résumé. */
+  timeline: [
+    {
+      org: "Autodesk",
+      role: "Senior Product Designer",
+      years: "2023 — now",
+      note: "Agentic and conversational AI across AutoCAD, Revit and Fusion. Now leading design for the signed-in account experience for small-business customers.",
+    },
+    {
+      org: "American Express",
+      role: "Product Designer",
+      years: "2021 — 2023",
+      note: "Commercial banking. Relationship-manager tooling and client-facing reporting.",
+    },
+    {
+      org: "Accenture",
+      role: "Experience Designer",
+      years: "2020 — 2021",
+      note: "Enterprise transformation work across financial services clients.",
+    },
+    {
+      org: "Fuzzy Math",
+      role: "UX Designer",
+      years: "2019 — 2020",
+      note: "Consultancy. Amtrak, Comcast and a rotating cast of complex internal tools.",
+    },
+  ],
+
+  /** Personality. The reference sites all have one of these and they work. */
+  offDuty: {
+    title: "Away from the screen",
+    body: "I hike badly and often, mostly in the Cascades. I read more non-fiction than is good for me. I build small useless prototypes on weekends, which is how about half of what I know got learned.",
+    image: {
+      slot: "about-offduty",
+      ratio: "3 / 2",
+      note: "Something personal and specific. A trail, a workbench, a sketchbook spread.",
+      alt: "Away from the screen",
+      src: null,
+    } satisfies Slot,
+  },
+
+  speaking: [
+    {
+      title: "Autodesk TechX 2026",
+      note: "How much should the agent decide? — 200+ attendees, directors through SVP.",
+    },
+    {
+      title: "Internal design guild",
+      note: "Running the autonomy-ladder workshop for teams shipping agentic features.",
+    },
+  ],
+};
+
 export const studies: Study[] = [
   {
     slug: "agent-autonomy",
     title: ["How much should", "the agent decide?"],
     deck: "Three CAD products were each inventing their own answer to the same question. I wrote the one they'd all share.",
+    category: "Agentic AI",
+    tint: "--tint-teal",
     org: "Autodesk",
     year: "2025",
     role: "Design lead",
@@ -263,6 +427,8 @@ export const studies: Study[] = [
     slug: "self-serve-billing",
     title: ["Billing that", "explains itself"],
     deck: "Small-business customers were calling support to find out what they'd already agreed to pay.",
+    category: "Enterprise SaaS",
+    tint: "--tint-indigo",
     org: "Autodesk",
     year: "2024",
     role: "Lead designer",
@@ -357,6 +523,8 @@ export const studies: Study[] = [
     slug: "commercial-banking",
     title: ["A portal three", "banks could share"],
     deck: "Every relationship manager had built their own spreadsheet because the software couldn't hold how they actually worked.",
+    category: "Fintech",
+    tint: "--tint-blue",
     org: "American Express",
     year: "2022",
     role: "Product designer",
@@ -438,6 +606,8 @@ export const studies: Study[] = [
     slug: "conversational-assistant",
     title: ["Teaching a bot", "to say I can't"],
     deck: "A support assistant that answered everything confidently, including the things it had no business answering.",
+    category: "Conversational AI",
+    tint: "--tint-green",
     org: "Autodesk",
     year: "2023",
     role: "Product designer",

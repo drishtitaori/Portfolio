@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { studies, studyBySlug } from "@/content/v2";
 import { Reveal, Kinetic } from "@/components/v2/motion";
 import Plate from "@/components/v2/Plate";
-import DimensionLine from "@/components/v2/DimensionLine";
 
 /**
  * Case study template.
@@ -66,7 +65,7 @@ export default async function StudyPage({
           <i aria-hidden="true">←</i> All work
         </Link>
 
-        <div className="mastheadMeta">
+        <div className="studyMeta">
           <span className="mono">
             {String(i + 1).padStart(2, "0")} / {String(studies.length).padStart(2, "0")}
           </span>
@@ -191,9 +190,6 @@ export default async function StudyPage({
           <a className="closerMail" href="mailto:drishtitaori57@gmail.com">
             Ask me to walk you through it <i aria-hidden="true">→</i>
           </a>
-          <div className="mastheadDim">
-            <DimensionLine label={`${study.org} · ${study.year}`} />
-          </div>
         </Reveal>
       </section>
 

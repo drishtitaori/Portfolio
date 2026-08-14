@@ -1,41 +1,34 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Instrument_Sans, Martian_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import { profile } from "@/content/v2";
 import Nav from "@/components/v2/Nav";
-import { Rails, Footer } from "@/components/v2/chrome";
+import { Footer } from "@/components/v2/chrome";
 import "./v2.css";
 
 /* ----------------------------------------------------------------------------
-   Three faces, three jobs.
+   Two voices, strictly divided.
 
-   Bricolage Grotesque is the display face and the reason the type system
-   works: its variable `opsz` axis means a 10rem masthead and a 1.4rem card
-   title are drawn as genuinely different cuts — looser aperture and thinner
-   joins at large sizes, sturdier at small — rather than one drawing scaled up
-   and down. Every display rule in v2.css sets `font-variation-settings: opsz`
-   to match its own size.
+   Plus Jakarta Sans does all the reading: hero, body, nav, labels, buttons.
+   It's a geometric grotesque with a tall x-height and slightly narrow
+   proportions — the closest freely-licensed stand-in for Calibre, which is
+   what the reference site licenses from Klim and which we can't use here.
 
-   Instrument Sans carries body copy and gets out of the way. Martian Mono is
-   the annotation voice: it reads as an instrument readout, which is the whole
-   conceit of the sheet.
+   Playfair Display appears only on project titles, the impact figures and the
+   closing line. Restricting the serif to where the work is means it reads as a
+   byline rather than as decoration, and it's the pairing that keeps a white
+   page from looking like a template.
    -------------------------------------------------------------------------- */
 
-const display = Bricolage_Grotesque({
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  axes: ["opsz"],
-  variable: "--v2-display",
+  variable: "--v2-sans",
   display: "swap",
 });
 
-const body = Instrument_Sans({
+const serif = Playfair_Display({
   subsets: ["latin"],
-  variable: "--v2-body",
-  display: "swap",
-});
-
-const mono = Martian_Mono({
-  subsets: ["latin"],
-  variable: "--v2-mono",
+  weight: ["700"],
+  variable: "--v2-serif",
   display: "swap",
 });
 
@@ -67,11 +60,10 @@ export const metadata: Metadata = {
  */
 export default function V2Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`v2 ${display.variable} ${body.variable} ${mono.variable}`}>
+    <div className={`v2 ${sans.variable} ${serif.variable}`}>
       <a href="#v2main" className="skipV2">
         Skip to content
       </a>
-      <Rails />
       <Nav />
       <div id="v2main">{children}</div>
       <Footer />
