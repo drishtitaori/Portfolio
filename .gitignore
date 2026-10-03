@@ -11,6 +11,9 @@ next-env.d.ts
 .superpowers/
 .playwright-mcp/
 
+# private source inventory; never publish internal work references
+docs/private-reference/
+
 # OS / Office cruft
 .DS_Store
 ~$*
